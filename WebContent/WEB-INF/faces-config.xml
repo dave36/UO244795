@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+	
+	<!-- Para internacionalizar la aplicación -->
+	<application>
+		<resource-bundle>
+		<base-name>messages</base-name>
+		<var>msgs</var>
+	</resource-bundle> </application>
+	
+	<!-- Bean de Usuario -->
+	<managed-bean>
+		<managed-bean-name>controller</managed-bean-name>
+		<managed-bean-class>com.sdi.presentation.BeanUsuarios</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+	
+	<!-- Mapa de navegación de error.xthml -->
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/error.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Mapa de navegación de login.html -->
+	<navigation-rule>
+		<from-view-id>/login.xhtml</from-view-id>
+		<navigation-case>
+			<from-action>#{controller.login}</from-action>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/principalUsuario.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!-- Mapa de navegación de registro.xhtml -->
+	<navigation-rule>
+		<from-view-id>/registro.xhtml</from-view-id>
+			<navigation-case>
+				<from-action>#{controller.registrar()}</from-action>
+				<from-outcome>exito</from-outcome>
+				<to-view-id>/login.xhtml</to-view-id>
+				<redirect/>
+			</navigation-case>
+	</navigation-rule>
+</faces-config>

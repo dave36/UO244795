@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template-inicio.xhtml">
+	<ui:define name="header">
+	    
+	</ui:define>
+	<ui:define name="cuerpo">
+	    <h:form>
+		    <p:panelGrid>
+		    	<p:row>
+		    		<p:column>
+		    			#{msgs.primerCampoLogin}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:inputText id="nombre" value="#{controller.usuario.login}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+		    		<p:row>
+		    		<p:column>
+		    			#{msgs.segundoCampoLogin}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:password id="passw" value="#{controller.usuario.password}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+	    		<p:row>
+		    		<p:column>
+		    		
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:commandButton
+			   			value="#{msgs.botonInicioSesionLogin}"
+			   			action="#{controller.login}"/>
+		    		</p:column>
+		    	</p:row>
+		    </p:panelGrid>
+	    </h:form>
+	    
+	    <p:panel>
+		    <div>
+		    	<a href="registro.xhtml">Registrarse</a>
+		    </div>
+		</p:panel>
+	</ui:define>
+	<ui:define name="pie">
+	
+	</ui:define>
+</ui:composition>
+</html>

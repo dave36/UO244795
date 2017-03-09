@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf14246831526460" configfile="/Segunda_Entrega/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="178" id="pf14890629695510" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf14890629695511" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="error.xhtml" x="338" y="178" id="pf14890629695512" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf14890629695511" path="/error.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="770" y="562" id="pf14890629695513" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" outlinks="pf14890657877480" inlinks="pf14890733682180" path="/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="principalUsuario.xhtml" id="pf14890657877482" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf14890657877480" path="/principalUsuario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="registro.xhtml" id="pf14890733682181" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf14890733682180" path="/registro.xhtml"/>
+  <links id="pf14890629695511" target="pf14890629695512" source="pf14890629695510" outcome="error"/>
+  <links id="pf14890657877480" target="pf14890657877482" source="pf14890629695513" outcome="exito" fromaction="#{controller.login}"/>
+  <links id="pf14890733682180" target="pf14890629695513" source="pf14890733682181" outcome="exito" redirect="true" fromaction="#{controller.registrar()}"/>
+</pageflow:Pageflow>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template-inicio.xhtml">
+	<ui:define name="header">
+	    
+	</ui:define>
+	<ui:define name="cuerpo">
+		<h:form>
+	   		<p:panelGrid>
+		    	<p:row>
+		    		<p:column>
+		    			#{msgs.primerCampoRegistro}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:inputText id="nombre" value="#{controller.user.login}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column>
+		    			#{msgs.segundoCampoRegistro}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:inputText id="email" value="#{controller.user.email}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+	    		<p:row>
+		    		<p:column>
+		    			#{msgs.tercerCampoRegistro}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:password id="passw" value="#{controller.user.password}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column>
+		    			#{msgs.cuartoCampoRegistro}
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:password id="passwConf" value="#{controller.passwordConfirmacion}"/>
+		    		</p:column>
+		    	</p:row>
+		    	
+	    		<p:row>
+		    		<p:column>
+		    		
+		    		</p:column>
+		    		
+		    		<p:column>
+		    			<p:commandButton
+			   			value="Registro"
+		   				action="#{controller.registrar()}"/>
+		    		</p:column>
+		    	</p:row>
+	    	</p:panelGrid>
+	   </h:form>
+	</ui:define>
+	<ui:define name="footer">
+	    
+	</ui:define>
+</ui:composition>
+</html>
