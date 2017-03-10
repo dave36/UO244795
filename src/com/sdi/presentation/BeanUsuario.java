@@ -1,10 +1,8 @@
 package com.sdi.presentation;
 
 import java.io.Serializable;
-import java.util.ResourceBundle;
 
 import javax.faces.bean.*;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import com.sdi.dto.User;
@@ -35,11 +33,11 @@ public class BeanUsuario extends User implements Serializable {
 	// Iniciamos los datos del alumno con los valores por defecto
 	// extraídos del archivo de propiedades correspondiente
 	public void iniciaUsuario(ActionEvent event) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
+		/*FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = facesContext.getApplication()
-				.getResourceBundle(facesContext, "msgs");
+				.getResourceBundle(facesContext, "msgs");*/
 		setId(null);
-		//setLogin(bundle.getString("valorDefectoUserId"));
+		setLogin("");
 		//setEmail(bundle.getString("valorDefectoCorreo"));
 	}
 }

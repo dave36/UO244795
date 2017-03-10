@@ -21,12 +21,16 @@
 			<table border="5" align="center">
 				<tr>
 					<th class="title">
-						<ui:insert name="titulo">#{msgs.tituloDefectoCabecera}</ui:insert>
+						<ui:insert name="titulo">#{msgs.tituloDefectoCabeceraUser} #{controller.user.login}</ui:insert>
 					</th>
 				</tr>
 			</table>
 			<br/>
 			<p:menubar>
+				<p:submenu label="#{msgs.tituloOpciones}" icon="ui-icon-document">
+						<p:menuitem value="#{msgs.tituloOpcion1User}"
+							action="#{controller.cambioVista}" />
+				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">
 					<p:menuitem value="#{msgs.enlaceIdiomaES}" actionListener="#{settings.setSpanish}" update="@all" />
 					<p:menuitem value="#{msgs.enlaceIdiomaEN}" actionListener="#{settings.setEnglish}" update="@all" /> 

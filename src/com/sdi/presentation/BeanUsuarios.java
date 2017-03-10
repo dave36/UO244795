@@ -9,6 +9,7 @@ import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import com.sdi.business.AdminService;
 import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
 import com.sdi.dto.User;
@@ -28,9 +29,13 @@ public class BeanUsuarios implements Serializable {
 	@ManagedProperty(value = "#{usuario}")
 	private BeanUsuario usuario;
 
-	private User user = new User();
+	private User user = null;
+	
+	private String password;
 	
 	private String passwordConfirmacion;
+	
+	private User[] usuarios = null;
 
 	public BeanUsuario getUsuario() {
 		return usuario;
@@ -54,6 +59,22 @@ public class BeanUsuarios implements Serializable {
 
 	public void setPasswordConfirmacion(String passwordConfirmacion) {
 		this.passwordConfirmacion = passwordConfirmacion;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public User[] getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(User[] usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	// Se inicia correctamente el MBean inyectado si JSF lo hubiera crea
@@ -100,7 +121,6 @@ public class BeanUsuarios implements Serializable {
 		
 		try {
 			userByLogin = us.findLoggableUser(usuario.getLogin(), usuario.getPassword());
-			setUser(userByLogin);
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
 		}
@@ -109,7 +129,12 @@ public class BeanUsuarios implements Serializable {
 		}else{
 			FacesContext.getCurrentInstance().getExternalContext()
 			.getSessionMap().put("usuario", userByLogin);
-			return "exito";
+			user = userByLogin;
+			System.out.println(user.getLogin());
+			if(user.getIsAdmin()){
+				return "admin";
+			}
+			return "user";
 		}
 	}
 	
@@ -127,5 +152,34 @@ public class BeanUsuarios implements Serializable {
 			return "exito";
 		}
 		return "error";
+	}
+	
+	public void modificar(){
+		if(password.equals(passwordConfirmacion)){
+			UserService us = Factories.getUserService();
+			try {
+				if(password!=null && passwordConfirmacion!=null){
+					user.setPassword(password);
+				}
+				us.updateUserDetails(user);
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		password="";
+		passwordConfirmacion="";
+	}
+	
+	public void listarUsuarios(){
+		AdminService as = Factories.getAdminService();
+		try {
+			usuarios = (User[]) as.findAllUsers().toArray(new User[0]);
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public String cambioVista(){
+		return "exito";
 	}
 }

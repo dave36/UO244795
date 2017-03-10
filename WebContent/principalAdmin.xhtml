@@ -7,50 +7,60 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="comun/plantillaPrincipal.xhtml">
+<ui:composition template="templates/template-admin.xhtml">
 	<ui:define name="header">
-	    <ul>
-			<li>
-				<a href="listarUsuarios">Usuarios</a>
-			</li>
-		</ul>
+	    
 	</ui:define>
-	<ui:define name="content">
+	<ui:define name="cuerpo">
 		<h:form>
-		    <p:dataTable var="user" value="#{usuarioBean.usuario}">
-			    <p:row headerText="Id">
-			        <h:outputText value="#{user.id}" />
-			    </p:row>
-			    
-			    <p:row headerText="EsAdministrador">
-			        <h:outputText value="#{user.isAdmin}" />
-			    </p:row>
-			    
-			    <p:row headerText="Estado">
-			        <h:outputText value="#{user.status}" />
-			    </p:row>
-			 
-			    <p:row headerText="Email">
-			        <h:inputText value="#{user.email}" />
-			    </p:row>
-			 
-			    <p:row headerText="Nombre">
-			        <h:outputText value="#{user.login}" />
-			    </p:row>
-			 
-			    <p:row headerText="Contraseña">
-			        <h:inputputText value="" />
-			    </p:row>
-			</p:dataTable>
-			<div align="center">
-		   		<p:commandButton
-		   		value="Modificar"
-		   		action=""/>
-	   		</div>
+		    <p:panelGrid>
+		    	<p:row>
+		    		<p:column><h:outputText value="Id"/></p:column>
+		    		<p:column><h:outputText value="#{controller.user.id}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="EsAdministrador"/></p:column>
+		    		<p:column><h:outputText value="#{controller.user.isAdmin}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="Estado"/></p:column>
+		    		<p:column><h:outputText value="#{controller.user.status}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="Nombre"/></p:column>
+		    		<p:column><h:outputText value="#{controller.user.login}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="email"/></p:column>
+		    		<p:column><h:inputText value="#{controller.user.email}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="Contraseña"/></p:column>
+		    		<p:column><p:password value="#{controller.password}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column><h:outputText value="Repita Contraseña"/></p:column>
+		    		<p:column><p:password value="#{controller.passwordConfirmacion}"/></p:column>
+		    	</p:row>
+		    	
+		    	<p:row>
+		    		<p:column></p:column>
+		    		<p:column><p:commandButton
+		   						value="Modificar"
+		   						action="#{controller.modificar}"/>
+					</p:column>
+		    	</p:row>
+		    </p:panelGrid>
 		</h:form>
 	</ui:define>
 	<ui:define name="footer">
-	    <a id="cerrarSesion_link_id" href="">Cerrar sesión</a>
+	    
 	</ui:define>
 </ui:composition>
 </html>
