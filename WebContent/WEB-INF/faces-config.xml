@@ -68,7 +68,7 @@
 	<navigation-rule>
 		<from-view-id>/principalAdmin.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{controller.cambioVista}</from-action>
+			<from-action>#{controller.listarUsuarios}</from-action>
 			<from-outcome>exito</from-outcome>
 			<to-view-id>/listaUsuarios.xhtml</to-view-id>
 			<redirect/>

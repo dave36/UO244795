@@ -170,13 +170,15 @@ public class BeanUsuarios implements Serializable {
 		passwordConfirmacion="";
 	}
 	
-	public void listarUsuarios(){
+	public String listarUsuarios(){
 		AdminService as = Factories.getAdminService();
 		try {
 			usuarios = (User[]) as.findAllUsers().toArray(new User[0]);
+			return "exito";
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
 		}
+		return "error";
 	}
 	
 	public String cambioVista(){

@@ -16,10 +16,25 @@
 	    	<p:panel header="#{msgs.tituloListaUsuarios}">
 	    		<p:dataTable id="tablalistado" var="var"
 					value="#{controller.usuarios}" border="1">
-					<p:column>
-						<f:facet name="Id"></f:facet>
+					<p:column headerText="Id">
+						<h:outputText value="#{var.id}"/>
 					</p:column>
 					
+					<p:column headerText="Nombre">
+						<h:outputText value="#{var.login}"/>
+					</p:column>
+					
+					<p:column headerText="Email">
+						<h:outputText value="#{var.email}"/>
+					</p:column>
+					
+					<p:column headerText="Status">
+						<h:outputText value="#{var.status}"/>
+					</p:column>
+					
+					<p:column headerText="EsAdministrador">
+						<h:outputText value="#{var.isAdmin}"/>
+					</p:column>
 				</p:dataTable>
 	    	</p:panel>
 	    </h:form>
