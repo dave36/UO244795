@@ -27,8 +27,8 @@
 			</table>
 			<br/>
 			<p:menubar>
-				<p:submenu label="#{msgs.tituloOpciones}" icon="ui-icon-document">
-						<p:menuitem value="#{msgs.tituloOpcion1Admin}"
+				<p:submenu id="submenuOpciones" label="#{msgs.tituloOpciones}" icon="ui-icon-document">
+						<p:menuitem id="menuitemUsuarios" value="#{msgs.tituloOpcion1Admin}"
 							action="#{controller.listarUsuarios}" />
 				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">

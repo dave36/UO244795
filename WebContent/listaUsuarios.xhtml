@@ -12,23 +12,22 @@
 	    Add your header here or delete to use the default
 	</ui:define>
 	<ui:define name="cuerpo">
-	    <h:form>
+	    <h:form id="form-usuarios">
 	    	<p:panel header="#{msgs.tituloListaUsuarios}">
 	    		<p:dataTable id="tablalistado" var="var"
 					value="#{controller.usuarios}" border="1">
-					<p:column headerText="Id">
+					 <p:column headerText="Id">
 						<h:outputText value="#{var.id}"/>
 					</p:column>
-					
-					<p:column headerText="Nombre">
+					<p:column headerText="Nombre" sortBy="#{var.login}">
 						<h:outputText value="#{var.login}"/>
 					</p:column>
 					
-					<p:column headerText="Email">
+					<p:column headerText="Email" sortBy="#{var.email}">
 						<h:outputText value="#{var.email}"/>
 					</p:column>
 					
-					<p:column headerText="Status">
+					<p:column headerText="Status" sortBy="#{var.status}">
 						<h:outputText value="#{var.status}"/>
 					</p:column>
 					

@@ -12,7 +12,7 @@
 	    
 	</ui:define>
 	<ui:define name="cuerpo">
-	    <h:form>
+	    <h:form id="form-login">
 		    <p:panelGrid>
 		    	<p:row>
 		    		<p:column>
@@ -40,7 +40,7 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:commandButton
+		    			<p:commandButton id="iniciarSesion"
 			   			value="#{msgs.botonInicioSesionLogin}"
 			   			action="#{controller.login}"/>
 		    		</p:column>

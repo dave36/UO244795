@@ -1,1 +1,1 @@
-java -classpath ../WebContent/WEB-INF/lib/hsqldb.jar org.hsqldb.Server
+java -classpath ..//lib/hsqldb.jar org.hsqldb.Server

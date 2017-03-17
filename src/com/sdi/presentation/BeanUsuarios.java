@@ -184,4 +184,5 @@ public class BeanUsuarios implements Serializable {
 	public String cambioVista(){
 		return "exito";
 	}
+	
 }
