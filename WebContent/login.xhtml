@@ -20,7 +20,9 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:inputText id="nombre" value="#{controller.usuario.login}"/>
+		    			<p:inputText id="nombre" value="#{controller.usuario.login}"
+		    				required="true" requiredMessage="#{msgs.requiredNombre}"/>
+		    				<p:message for="nombre" styleClass="error"/>
 		    		</p:column>
 		    	</p:row>
 		    	
@@ -30,7 +32,9 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:password id="passw" value="#{controller.usuario.password}"/>
+		    			<p:password id="passw" value="#{controller.usuario.password}"
+		    			required="true" requiredMessage="#{msgs.requiredPass}"/>
+		    			<p:message for="passw" styleClass="error"/>
 		    		</p:column>
 		    	</p:row>
 		    	
@@ -42,7 +46,8 @@
 		    		<p:column>
 		    			<p:commandButton id="iniciarSesion"
 			   			value="#{msgs.botonInicioSesionLogin}"
-			   			action="#{controller.login}"/>
+			   			action="#{controller.login}"
+			   			update="@form"/>
 		    		</p:column>
 		    	</p:row>
 		    </p:panelGrid>

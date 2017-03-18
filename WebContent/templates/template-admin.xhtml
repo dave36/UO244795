@@ -31,6 +31,10 @@
 						<p:menuitem id="menuitemUsuarios" value="#{msgs.tituloOpcion1Admin}"
 							action="#{controller.listarUsuarios}" />
 				</p:submenu>
+				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
+						<p:menuitem value="#{msgs.tituloCerrarSesion}"
+							action="#{controller.cerrarSesion()}" />
+				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">
 					<p:menuitem value="#{msgs.enlaceIdiomaES}" actionListener="#{settings.setSpanish}" update="@all" />
 					<p:menuitem value="#{msgs.enlaceIdiomaEN}" actionListener="#{settings.setEnglish}" update="@all" /> 

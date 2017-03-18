@@ -15,7 +15,9 @@
 	    <h:form id="form-usuarios">
 	    	<p:panel header="#{msgs.tituloListaUsuarios}">
 	    		<p:dataTable id="tablalistado" var="var"
-					value="#{controller.usuarios}" border="1">
+					value="#{controller.usuarios}" border="1"
+					selectionMode="single" selection="#{controller.seleccionado}"
+					rowKey="#{var.id}">
 					 <p:column headerText="Id">
 						<h:outputText value="#{var.id}"/>
 					</p:column>
@@ -35,6 +37,23 @@
 						<h:outputText value="#{var.isAdmin}"/>
 					</p:column>
 				</p:dataTable>
+				<div>
+					<p:commandButton
+						id="modificar"
+						process="@form"
+			   			value="ModificarEstado"
+			   			action="#{controller.modificarStatus()}"
+			   			update="@form"
+			   			/>
+			   		
+			   		<p:commandButton
+						id="delete"
+						process="@form"
+			   			value="Eliminar Usuario"
+			   			action="#{controller.eliminarUsuario()}"
+			   			update="@form"
+			   			/>
+				</div>
 	    	</p:panel>
 	    </h:form>
 	</ui:define>
