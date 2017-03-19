@@ -19,7 +19,7 @@
 					selectionMode="single" selection="#{controller.seleccionado}"
 					rowKey="#{var.id}">
 					 <p:column headerText="Id">
-						<h:outputText value="#{var.id}"/>
+						<h:outputText id="filaId" value="#{var.id}"/>
 					</p:column>
 					<p:column headerText="Nombre" sortBy="#{var.login}">
 						<h:outputText value="#{var.login}"/>
@@ -30,7 +30,7 @@
 					</p:column>
 					
 					<p:column headerText="Status" sortBy="#{var.status}">
-						<h:outputText value="#{var.status}"/>
+						<h:outputText id="filaStatus" value="#{var.status}"/>
 					</p:column>
 					
 					<p:column headerText="EsAdministrador">
