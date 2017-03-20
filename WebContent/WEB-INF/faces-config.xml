@@ -48,6 +48,11 @@
 			<to-view-id>/principalAdmin.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>error</from-outcome>
+			<to-view-id>/login.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
 	<!-- Mapa de navegación de registro.xhtml -->

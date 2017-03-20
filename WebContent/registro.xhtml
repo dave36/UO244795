@@ -22,8 +22,8 @@
 		    		<p:column>
 		    			<p:inputText id="nombre" value="#{controller.user.login}"
 		    			required="true" requiredMessage="#{msgs.requiredNombre}"
-		    			validatorMessage="#{msgs.vNombreCorto}">
-		    			<f:validateLength minimum="3"/>
+		    			validatorMessage="#{msgs.vNombreCorto}"
+		    			validator="#{controller.loginValidator}">		    			
 		    			</p:inputText>
 		    			<p:message for="nombre" styleClass="error"/>
 		    		</p:column>
@@ -53,9 +53,7 @@
 		    		<p:column>
 		    			<p:password id="passw" value="#{controller.user.password}"
 		    			required="true" requiredMessage="#{msgs.requiredPass}"
-		    			validatorMessage="#{msgs.vMinPass}">
-		    			<f:validateLength minimum="8"/>
-		    			</p:password>
+		    			/>
 		    			<p:message for="passw" styleClass="error"/>
 		    		</p:column>
 		    	</p:row>
@@ -71,7 +69,6 @@
 		    			validatorMessage="#{msgs.vMinPass}"
 		    			converterMessage="#{msgs.vPass}"
 		    			validator="#{controller.passwValidator}">
-		    			<f:validateLength minimum="8"/>
 		    			</p:password>
 		    			<p:message for="passwConf" styleClass="error"/>
 		    		</p:column>

@@ -6,12 +6,13 @@ import java.util.ResourceBundle;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.*;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
-import javax.validation.ValidationException;
 
 import com.sdi.business.AdminService;
 import com.sdi.business.UserService;
@@ -200,29 +201,6 @@ public class BeanUsuarios implements Serializable {
 		return "exito";
 	}
 	
-	public void passwValidator(FacesContext context, UIComponent component,
-			Object value) throws ValidationException{
-		String password = "";
-		if(value!=null){
-			password = value.toString();
-		}
-		boolean letras = false;
-		boolean numeros = false;
-		
-        for(int i=0; i<password.length(); i++){
-        	
-        	if(Character.isLetter(password.charAt(i))){
-        		letras = true;
-        	}
-        	if(Character.isDigit(password.charAt(i))){
-        		numeros=true;
-        	}
-        }
-        if(!(numeros&&letras)){
-        	throw new ValidationException();
-        }
-	}
-	
 	public void modificarStatus(){
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
@@ -277,4 +255,49 @@ public class BeanUsuarios implements Serializable {
 		return "cerrar";
 	}
 	
+	//------ Validadores
+	
+	public void loginValidator(FacesContext context, UIComponent component,
+			Object value) throws ValidatorException{
+		String userlogin = "";
+		if(value!=null){
+			userlogin = value.toString();
+		}
+		UserService us = Factories.getUserService();
+		try {
+			User login = us.findRepeatUser(userlogin);
+			if(login!=null){
+				FacesMessage message = new FacesMessage("Login repetido");
+				throw new ValidatorException(message);
+			}
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void passwValidator(FacesContext context, UIComponent component,
+			Object value) throws ValidatorException{
+		String password = "";
+		if(value!=null){
+			password = value.toString();
+		}
+		boolean letras = false;
+		boolean numeros = false;
+		
+        for(int i=0; i<password.length(); i++){
+        	
+        	if(Character.isLetter(password.charAt(i))){
+        		letras = true;
+        	}
+        	if(Character.isDigit(password.charAt(i))){
+        		numeros=true;
+        	}
+        }
+        if(!(numeros&&letras) || !password.equals(user.getPassword()) 
+        		|| password.length() < 8){
+        	FacesMessage message = new FacesMessage("Contraseña incorrecta");
+        	throw new ValidatorException(message);
+        }
+	}
 }

@@ -21,7 +21,10 @@
 		    		
 		    		<p:column>
 		    			<p:inputText id="nombre" value="#{controller.usuario.login}"
-		    				required="true" requiredMessage="#{msgs.requiredNombre}"/>
+		    				required="true" requiredMessage="#{msgs.requiredNombre}"
+		    				validatorMessage="#{msgs.vNombreCorto}"
+		    				validator="#{controller.loginValidator}">
+		    				</p:inputText>
 		    				<p:message for="nombre" styleClass="error"/>
 		    		</p:column>
 		    	</p:row>

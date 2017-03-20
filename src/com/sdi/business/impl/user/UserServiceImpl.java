@@ -4,6 +4,7 @@ import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
 import com.sdi.business.impl.command.CommandExecutor;
 import com.sdi.business.impl.user.command.FindLoggableUSerCommand;
+import com.sdi.business.impl.user.command.FindRepeatUserCommand;
 import com.sdi.business.impl.user.command.RegisterUserCommand;
 import com.sdi.business.impl.user.command.UpdateUserDetailsCommand;
 import com.sdi.dto.User;
@@ -30,6 +31,13 @@ public class UserServiceImpl implements UserService {
 		
 		return new CommandExecutor<User>().execute( 
 				new FindLoggableUSerCommand<User>(login, password) 
+		);
+	}
+
+	@Override
+	public User findRepeatUser(String user) throws BusinessException {
+		return new CommandExecutor<User>().execute( 
+				new FindRepeatUserCommand(user) 
 		);
 	}
 
