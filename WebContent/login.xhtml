@@ -13,6 +13,7 @@
 	</ui:define>
 	<ui:define name="cuerpo">
 	    <h:form id="form-login">
+	    	<p:messages for="form-login" globalOnly="true" />
 		    <p:panelGrid>
 		    	<p:row>
 		    		<p:column>
@@ -22,8 +23,7 @@
 		    		<p:column>
 		    			<p:inputText id="nombre" value="#{controller.usuario.login}"
 		    				required="true" requiredMessage="#{msgs.requiredNombre}"
-		    				validatorMessage="#{msgs.vNombreCorto}"
-		    				validator="#{controller.loginValidator}">
+		    				>
 		    				</p:inputText>
 		    				<p:message for="nombre" styleClass="error"/>
 		    		</p:column>

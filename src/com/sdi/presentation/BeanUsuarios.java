@@ -141,12 +141,16 @@ public class BeanUsuarios implements Serializable {
 			System.out.println(e.getMessage());
 		}
 		if(userByLogin == null){
+			FacesContext.getCurrentInstance().addMessage("form-login", 
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Usuario o clave no valida",
+							"Error en el login"));
+			
 			return "error";
 		}else{
 			FacesContext.getCurrentInstance().getExternalContext()
 			.getSessionMap().put("usuario", userByLogin);
 			user = userByLogin;
-			System.out.println(user.getLogin());
 			if(user.getIsAdmin()){
 				return "admin";
 			}
@@ -167,7 +171,13 @@ public class BeanUsuarios implements Serializable {
 			}
 			return "exito";
 		}
-		return "error";
+		else{
+			FacesContext.getCurrentInstance().addMessage("form-registro", 
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Las contraseñas deben coincidir",
+							"Error en el login"));
+			return "error";
+		}
 	}
 	
 	public void modificar(){
@@ -230,6 +240,7 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void eliminarUsuario(){
+		System.out.println(seleccionado.getLogin());
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
 			try {
@@ -294,8 +305,7 @@ public class BeanUsuarios implements Serializable {
         		numeros=true;
         	}
         }
-        if(!(numeros&&letras) || !password.equals(user.getPassword()) 
-        		|| password.length() < 8){
+        if(!(numeros&&letras) || password.length() < 8){
         	FacesMessage message = new FacesMessage("Contraseña incorrecta");
         	throw new ValidatorException(message);
         }

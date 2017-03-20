@@ -17,41 +17,55 @@
 				<p:dataTable id="tablalistado" var="var"
 					value="#{controller.usuarios}" border="1" selectionMode="single"
 					selection="#{controller.seleccionado}" rowKey="#{var.id}">
-					<p:column headerText="Id">
+					<p:column headerText="#{msgs.idPrincipal}">
 						<h:outputText id="filaId" value="#{var.id}" />
 					</p:column>
-					<p:column id="headerNombre" headerText="Nombre"
+					<p:column id="headerNombre" headerText="#{msgs.nombrePrincipal}"
 						sortBy="#{var.login}">
 						<h:outputText id="filaNombre" value="#{var.login}" />
 					</p:column>
 
-					<p:column id="headerEmail" headerText="Email" sortBy="#{var.email}">
+					<p:column id="headerEmail" headerText="#{msgs.emailPrincipal}"
+						 sortBy="#{var.email}">
 						<h:outputText value="#{var.email}" />
 					</p:column>
 
-					<p:column id="headerStatus" headerText="Status"
+					<p:column id="headerStatus" headerText="#{msgs.statusPrincipal}"
 						sortBy="#{var.status}">
 						<h:outputText id="filaStatus" value="#{var.status}" />
 					</p:column>
 
-					<p:column headerText="EsAdministrador">
+					<p:column headerText="#{msgs.isAdmPrincipal}">
 						<h:outputText value="#{var.isAdmin}" />
 					</p:column>
 				</p:dataTable>
 				<div>
 					<p:commandButton id="modificar" process="@form"
-						value="ModificarEstado" action="#{controller.modificarStatus()}"
+						value="#{msgs.botonModificarEstado}" action="#{controller.modificarStatus()}"
 						update="@form" />
 
 					<p:commandButton id="delete" process="@form"
-						value="Eliminar Usuario" action="#{controller.eliminarUsuario()}"
-						update="@form" />
+						value="#{msgs.botonEliminarUsuario}"
+						action="#{controller.eliminarUsuario()}"
+						update="@form" >
+						<p:confirm header="#{msgs.headerDialog}" message="#{msgs.messDialog}"
+						 icon="ui-icon-alert"/>
+					</p:commandButton>
+					
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+				        <p:commandButton value="#{msgs.botonSi}" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+				        <p:commandButton value="#{msgs.botonNo}" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    				</p:confirmDialog>
 				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
+	<ui:define name="pie">
+		<p:panel>
+		    <div>
+		    	<a href="principalAdmin.xhtml">#{msgs.enlaceAtras}</a>
+		    </div>
+	    </p:panel>
 	</ui:define>
 </ui:composition>
 </html>

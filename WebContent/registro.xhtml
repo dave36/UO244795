@@ -88,10 +88,15 @@
 		    		</p:column>
 		    	</p:row>
 	    	</p:panelGrid>
+	    	<p:messages for="form-registro" globalOnly="true"/>
 	   </h:form>
 	</ui:define>
-	<ui:define name="footer">
-	    
+	<ui:define name="pie">
+		<p:panel>
+		    <div>
+		    	<a href="login.xhtml">#{msgs.enlaceAtras}</a>
+		    </div>
+	    </p:panel>
 	</ui:define>
 </ui:composition>
 </html>
