@@ -12,7 +12,7 @@
 	    
 	</ui:define>
 	<ui:define name="cuerpo">
-		<h:form>
+		<h:form id="form-registro">
 	   		<p:panelGrid>
 		    	<p:row>
 		    		<p:column>
@@ -85,6 +85,7 @@
 		    		<p:column>
 		    			<p:commandButton
 			   			value="#{msgs.linkRegistroLogin}"
+		    			id="registrar"
 		   				action="#{controller.registrar()}"
 		   				update="@form"/>
 		    		</p:column>
