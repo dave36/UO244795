@@ -163,4 +163,9 @@ public class TaskDaoJdbcImpl implements TaskDao {
 		
 	}
 
+	@Override
+	public void deleteAllTasks() {
+		jdbcTemplate.execute("TASK_DELETE_ALL");
+	}
+
 }

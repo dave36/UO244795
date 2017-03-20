@@ -83,4 +83,9 @@ public class CategoryDaoJdbcImpl implements CategoryDao {
 			);
 	}
 
+	@Override
+	public void deleteAllCategories() {
+		jdbcTemplate.execute("CATEGORY_DELETE_ALL");
+	}
+
 }

@@ -66,5 +66,7 @@ public interface TaskDao extends GenericDao<Task, Long> {
 	 * @return All already finished tasks in a user's inbox
 	 */
 	List<Task> findFinishedTasksInboxByUserId(Long userId);
+	
+	void deleteAllTasks();
 
 }
