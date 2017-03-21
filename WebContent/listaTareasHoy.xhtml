@@ -43,6 +43,10 @@
 						value="#{msgs.botonFinalizarTarea}" 
 						action="#{controller.finalizarTarea()}"
 						update="@form" />
+					<p:commandButton id="añadirTarea" process="@form"
+						value="#{msgs.botonAñadirTarea}" 
+						action="#{controller.añadirTarea()}"
+						update="@form"/>
 				</div>
 			</p:panel>
 		</h:form>

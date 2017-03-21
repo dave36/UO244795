@@ -49,6 +49,8 @@ public class BeanUsuarios implements Serializable {
 	
 	private List<Task> tareas = null;
 	
+	private Task task = new Task();
+	
 	private Task seleccionada = new Task();
 	
 	private boolean inbox = false;
@@ -380,6 +382,24 @@ public class BeanUsuarios implements Serializable {
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public String añadirTarea() {
+		return "tarea";
+	}
+	
+	public String crearTarea(){
+		Task tarea = task;
+		task = new Task();
+		TaskService ts = Factories.getTaskService();
+		try {
+			tarea.setUserId(user.getId());
+			ts.createTask(tarea);
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+			return "error";
+		}
+		return "exito";
 	}
 	
 	public String cerrarSesion(){

@@ -101,4 +101,34 @@
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
+	
+	<!--  Mapa de navegación de la lista tareas Hoy -->
+	<navigation-rule>
+		<from-view-id>/listaTareasHoy.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>tarea</from-outcome>
+			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+		<!--  Mapa de navegación de la lista tareas Inbox -->
+	<navigation-rule>
+		<from-view-id>/listaTareasInbox.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>tarea</from-outcome>
+			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+		<!--  Mapa de navegación de la lista tareas Semana -->
+	<navigation-rule>
+		<from-view-id>/listaTareasSemana.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>tarea</from-outcome>
+			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
 </faces-config>
