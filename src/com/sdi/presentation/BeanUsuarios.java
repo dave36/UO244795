@@ -49,6 +49,8 @@ public class BeanUsuarios implements Serializable {
 	
 	private List<Task> tareas = null;
 	
+	private Task seleccionada = new Task();
+	
 	private boolean inbox = false;
 	
 	private boolean hoy = false;
@@ -143,6 +145,14 @@ public class BeanUsuarios implements Serializable {
 
 	public void setMostrarTerminadas(boolean mostrarTerminadas) {
 		this.mostrarTerminadas = mostrarTerminadas;
+	}
+
+	public Task getSeleccionada() {
+		return seleccionada;
+	}
+
+	public void setSeleccionada(Task seleccionada) {
+		this.seleccionada = seleccionada;
 	}
 
 	// Se inicia correctamente el MBean inyectado si JSF lo hubiera crea
@@ -276,10 +286,6 @@ public class BeanUsuarios implements Serializable {
 		return "error";
 	}
 	
-	public String cambioVista(){
-		return "exito";
-	}
-	
 	public void modificarStatus(){
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
@@ -364,6 +370,16 @@ public class BeanUsuarios implements Serializable {
 			}
 		}
 		return "error";
+	}
+	
+	public void finalizarTarea(){
+		TaskService ts = Factories.getTaskService();
+		try {
+			ts.markTaskAsFinished(seleccionada.getId());
+			cargarTareas();
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public String cerrarSesion(){

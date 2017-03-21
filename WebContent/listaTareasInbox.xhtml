@@ -31,7 +31,9 @@
 			<p:panel header="#{msgs.tituloListaUsuarios}">
 				<p:dataTable id="tablalistado" var="var"
 					value="#{controller.tareas}" border="1"
-					paginator="true" rows="8" lazy="true" dynamic="true">
+					paginator="true" rows="8" lazy="true" dynamic="true"
+					selectionMode="single" selection="#{controller.seleccionada}"
+					rowKey="#{var.id}">
 					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
 						sortBy="#{var.title}">
 						<h:outputText id="filaNombre" value="#{var.title}" />
@@ -60,6 +62,12 @@
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
+				<div>
+					<p:commandButton id="eliminar" process="@form"
+						value="#{msgs.botonFinalizarTarea}" 
+						action="#{controller.finalizarTarea()}"
+						update="@form" />
+				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>
