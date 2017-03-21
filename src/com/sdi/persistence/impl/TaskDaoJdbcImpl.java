@@ -168,4 +168,13 @@ public class TaskDaoJdbcImpl implements TaskDao {
 		jdbcTemplate.execute("TASK_DELETE_ALL");
 	}
 
+	@Override
+	public List<Task> findUnfinishedTaskByUserId(Long userId) {
+		return jdbcTemplate.queryForList(
+				"TASK_FIND_UNFINISHED_BY_USER_ID", 
+				new TaskDtoMapper(),
+				userId
+			);
+	}
+
 }

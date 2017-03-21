@@ -15,8 +15,10 @@ import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
 
 import com.sdi.business.AdminService;
+import com.sdi.business.TaskService;
 import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
+import com.sdi.dto.Task;
 import com.sdi.dto.User;
 import com.sdi.dto.types.UserStatus;
 import com.sdi.infrastructure.Factories;
@@ -44,6 +46,14 @@ public class BeanUsuarios implements Serializable {
 	private String passwordConfirmacion;
 	
 	private List<User> usuarios = null;
+	
+	private List<Task> tareas = null;
+	
+	private boolean inbox = false;
+	
+	private boolean hoy = false;
+	
+	private boolean semana = false;
 
 	public BeanUsuario getUsuario() {
 		return usuario;
@@ -91,6 +101,38 @@ public class BeanUsuarios implements Serializable {
 	
 	public void setSeleccionado(User user){
 		this.seleccionado = user;
+	}
+	
+	public List<Task> getTareas() {
+		return tareas;
+	}
+
+	public void setTareas(List<Task> unfinished) {
+		this.tareas = unfinished;
+	}
+
+	public boolean isInbox() {
+		return inbox;
+	}
+
+	public void setInbox(boolean inbox) {
+		this.inbox = inbox;
+	}
+
+	public boolean isHoy() {
+		return hoy;
+	}
+
+	public void setHoy(boolean hoy) {
+		this.hoy = hoy;
+	}
+
+	public boolean isSemana() {
+		return semana;
+	}
+
+	public void setSemana(boolean semana) {
+		this.semana = semana;
 	}
 
 	// Se inicia correctamente el MBean inyectado si JSF lo hubiera crea
@@ -196,6 +238,23 @@ public class BeanUsuarios implements Serializable {
 		passwordConfirmacion="";
 	}
 	
+	public void inicializarBD(){
+		AdminService as = Factories.getAdminService();
+		try {
+			as.dropAndInsert();
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Se han cargado los usuarios correctamente",
+							"Cargar usuarios"));
+		} catch (BusinessException e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							"Error al cargar usuarios",
+							"Error al cargar usuarios"));
+		}
+	}
+	
 	public String listarUsuarios(){
 		AdminService as = Factories.getAdminService();
 		try {
@@ -218,23 +277,20 @@ public class BeanUsuarios implements Serializable {
 				try {
 					as.disableUser(seleccionado.getId());
 				} catch (BusinessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 			else{
 				try {
 					as.enableUser(seleccionado.getId());
 				} catch (BusinessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					System.out.println(e.getMessage());
 				}
 			}
 			try {
 				usuarios = as.findAllUsers();
 			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
 	}
@@ -246,16 +302,55 @@ public class BeanUsuarios implements Serializable {
 			try {
 				as.deepDeleteUser(seleccionado.getId());
 			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 			try {
 				usuarios = as.findAllUsers();
 			} catch (BusinessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 		}
+	}
+	
+	public String tareasInacabadas(){
+		TaskService ts = Factories.getTaskService();
+		try {
+			tareas = ts.findUnfinishedTasksByUserId(user.getId());
+			return "exito";
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+			return "error";
+		}
+	}
+	
+	
+	public String cargarTareas(){
+		TaskService ts = Factories.getTaskService();
+		if(inbox){
+			try {
+				tareas = ts.findInboxTasksByUserId(user.getId());
+				return "inbox";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		else if(hoy){
+			try {
+				tareas = ts.findTodayTasksByUserId(user.getId());
+				return "hoy";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		else if(semana){
+			try {
+				tareas = ts.findWeekTasksByUserId(user.getId());
+				return "semana";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "error";
 	}
 	
 	public String cerrarSesion(){

@@ -1,11 +1,7 @@
 package com.sdi.business.impl.admin.command;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.sdi.business.exception.BusinessException;
 import com.sdi.business.impl.command.Command;
@@ -18,9 +14,6 @@ import com.sdi.persistence.TaskDao;
 import com.sdi.persistence.UserDao;
 
 public class DropAndInsertDB implements Command<Void> {
-	
-	private List<Long> idsUsers = new ArrayList<>();
-	private Map<Long, List<Category>> categorias = new HashMap<>();
 
 	@Override
 	public Void execute() throws BusinessException {
@@ -28,93 +21,99 @@ public class DropAndInsertDB implements Command<Void> {
 		CategoryDao cDao = Persistence.getCategoryDao();
 		TaskDao tDao = Persistence.getTaskDao();
 		
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 6);
+		
 		tDao.deleteAllTasks();
 		cDao.deleteAllCategories();
 		uDao.deleteAllUser();
 		
-		for(int i=1; i<=3; i++){
+		for(int i=1; i<4; i++){
 			User user = new User();
 			String login="user"+i;
 			user.setLogin(login);
 			user.setPassword(login);
+			user.setEmail(login+"@mail.com");
 			Long idUser = uDao.save(user);
-			idsUsers.add(idUser);
-		}
-		
-		for(Long id: idsUsers){
-			List<Category> cs = new ArrayList<>();
-			for(int i=1; i<=3; i++){
+			
+			crearTareasSinCategoria(tDao, idUser);
+			
+			for(int j=1; j<4; j++){
 				Category c = new Category();
-				String name="categoria"+i + "user"+id;
+				String name="categoria"+j;
 				c.setName(name);
-				c.setUserId(id);
-				cDao.save(c);
-				cs.add(c);				
-			}
-			categorias.put(id, cs);
-		}
-		
-		Calendar calendar = Calendar.getInstance();
-		calendar.add(Calendar.DAY_OF_MONTH, 6);
-		
-		for(Long id: idsUsers){
-			for(int i=1; i<11; i++){
-				Task t = new Task();
-				String name = "Tarea"+i;
-				t.setTitle(name);
-				t.setPlanned(calendar.getTime());
-				t.setUserId(id);
-				tDao.save(t);
-			}
-			
-			for(int i=11; i<21; i++){
-				Task t = new Task();
-				String name = "Tarea"+i;
-				t.setTitle(name);
-				t.setPlanned(new Date());
-				t.setUserId(id);
-				tDao.save(t);
-			}
-			
-			calendar.add(Calendar.DAY_OF_MONTH, -6);
-			
-			List<Category> cs = categorias.get(id);
-			for(int i=21; i<24; i++){
-				Task t = new Task();
-				String name = "Tarea"+i;
-				t.setTitle(name);
-				t.setPlanned(calendar.getTime());
-				t.setUserId(id);
-				t.setCategoryId(cs.get(0).getId());
-				tDao.save(t);
-			}
-			
-			calendar.add(Calendar.DAY_OF_MONTH, -4);
-			
-			for(int i=24; i<26; i++){
-				Task t = new Task();
-				String name = "Tarea"+i;
-				t.setTitle(name);
-				t.setPlanned(calendar.getTime());
-				t.setUserId(id);
-				t.setCategoryId(cs.get(1).getId());
-				tDao.save(t);
-			}
-			
-			calendar.add(Calendar.DAY_OF_MONTH, -9);
-			
-			for(int i=24; i<26; i++){
-				Task t = new Task();
-				String name = "Tarea"+i;
-				t.setTitle(name);
-				t.setPlanned(calendar.getTime());
-				t.setUserId(id);
-				t.setCategoryId(cs.get(2).getId());
-				tDao.save(t);
+				c.setUserId(idUser);
+				Long idCat = cDao.save(c);
+				
+				crearTareasPorCategoria(tDao, idCat, idUser, j);
 			}
 		}
 		
 		return null;
 	}
 
+	private void crearTareasPorCategoria(TaskDao tDao, Long idCat, Long idUser, int j) {
+		Calendar calendar = Calendar.getInstance();
+
+		if(j==1){
+			calendar.add(Calendar.DAY_OF_MONTH, -4);
+			for(int k=21; k<24; k++){
+				Task t = new Task();
+				String namet = "Tarea"+k;
+				t.setTitle(namet);
+				t.setPlanned(calendar.getTime());
+				t.setUserId(idUser);
+				t.setCategoryId(idCat);
+				tDao.save(t);
+			}
+		}
+		else if(j==2){
+			calendar.add(Calendar.DAY_OF_MONTH, -6);
+			for(int k=24; k<27; k++){
+				Task t = new Task();
+				String namet = "Tarea"+k;
+				t.setTitle(namet);
+				t.setPlanned(calendar.getTime());
+				t.setUserId(idUser);
+				t.setCategoryId(idCat);
+				tDao.save(t);
+			}
+		}
+		else{
+			calendar.add(Calendar.DAY_OF_MONTH, -9);
+			for(int k=27; k<31; k++){
+				Task t = new Task();
+				String namet = "Tarea"+k;
+				t.setTitle(namet);
+				t.setPlanned(calendar.getTime());
+				t.setUserId(idUser);
+				t.setCategoryId(idCat);
+				tDao.save(t);
+			}
+		}
+	}
+
+	private void crearTareasSinCategoria(TaskDao tDao, Long idUser) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 6);
+		
+		for(int i=1; i<21; i++){
+			if(i<11){
+				Task t = new Task();
+				String name = "Tarea"+i;
+				t.setTitle(name);
+				t.setPlanned(calendar.getTime());
+				t.setUserId(idUser);
+				tDao.save(t);
+			}
+			else{
+				Task t = new Task();
+				String name = "Tarea"+i;
+				t.setTitle(name);
+				t.setPlanned(new Date());
+				t.setUserId(idUser);
+				tDao.save(t);
+			}
+		}
+	}
 }

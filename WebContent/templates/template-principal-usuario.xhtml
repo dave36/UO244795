@@ -12,7 +12,6 @@
 	</h:head>
 	<h:body>
 		<h:form id="form-cabecera">
-			<p:messages for="form-cabecera" globalOnly="true" />
 			<center>
 				<h1>#{msgs.tituloAplicacion1}</h1>
 				<br />
@@ -28,13 +27,6 @@
 			</table>
 			<br/>
 			<p:menubar>
-				<p:submenu id="submenuOpciones" label="#{msgs.tituloOpciones}" icon="ui-icon-document">
-						<p:menuitem id="menuitemUsuarios" value="#{msgs.tituloOpcion1Admin}"
-							action="#{controller.listarUsuarios}" />
-						
-						<p:menuitem id="menuitemRecargarBD" value="#{msgs.tituloOpcion2Admin}"
-							action="#{controller.inicializarBD}" />
-				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
 						<p:menuitem value="#{msgs.tituloCerrarSesion}"
 							action="#{controller.cerrarSesion()}" />

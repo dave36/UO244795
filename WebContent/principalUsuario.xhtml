@@ -7,66 +7,33 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="templates/template-usuario.xhtml">
+<ui:composition template="templates/template-principal-usuario.xhtml">
 	<ui:define name="header">
-	    
+	    Add your header here or delete to use the default
 	</ui:define>
 	<ui:define name="cuerpo">
 		<h:form>
-		    <p:panelGrid>
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.idPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.id}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.isAdmPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.isAdmin}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.statusPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.status}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.nombrePrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.login}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.emailPrincipal}"/></p:column>
-		    		<p:column><p:inputText id="email" value="#{controller.user.email}" 
-		    			validatorMessage="#{msgs.vEmail}">
-		    			<f:validateRegex 
-		    			pattern="^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$"/>
-		    			</p:inputText>
-		    			<p:message for="email" styleClass="error"/>
-		    			</p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.passPrincipal}"/></p:column>
-		    		<p:column><p:password value="#{controller.password}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.rPassPrincipal}"/></p:column>
-		    		<p:column><p:password value="#{controller.passwordConfirmacion}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column></p:column>
-		    		<p:column><p:commandButton
-		   						id="modificar"
-		   						value="#{msgs.botonModificar}"
-		   						action="#{controller.modificar}"/>
-					</p:column>
-		    	</p:row>
-		    </p:panelGrid>
+			<p:panel header="Modo de filtrado" style="margin-bottom:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			        <h:outputText value="Inbox: " />
+			        <p:selectBooleanCheckbox value="#{controller.inbox}" />
+			 
+			        <h:outputText value="Hoy: " />
+			        <p:selectBooleanCheckbox value="#{controller.hoy}"/>
+			        
+			        <h:outputText value="Semana: " />
+			        <p:selectBooleanCheckbox value="#{controller.semana}"/>			          
+    			</h:panelGrid>               	
+               	<p:separator />
+               	
+               	<p:commandButton id="filtrar"
+			   			value="Filtrar"
+			   			action="#{controller.cargarTareas}"
+			   			update="@all"/>
+             </p:panel>
 		</h:form>
 	</ui:define>
-	<ui:define name="footer">
+	<ui:define name="pie">
 	    
 	</ui:define>
 </ui:composition>

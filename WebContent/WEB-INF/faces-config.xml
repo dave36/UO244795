@@ -72,9 +72,21 @@
 	<navigation-rule>
 		<from-view-id>/principalUsuario.xhtml</from-view-id>
 		<navigation-case>
-			<from-action>#{controller.cambioVista}</from-action>
-			<from-outcome>exito</from-outcome>
-			<to-view-id>/listaTareas.xhtml</to-view-id>
+			<from-action>#{controller.cargarTareas}</from-action>
+			<from-outcome>inbox</from-outcome>
+			<to-view-id>/listaTareasInbox.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controller.cargarTareas}</from-action>
+			<from-outcome>hoy</from-outcome>
+			<to-view-id>/listaTareasHoy.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-action>#{controller.cargarTareas}</from-action>
+			<from-outcome>semana</from-outcome>
+			<to-view-id>/listaTareasSemana.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

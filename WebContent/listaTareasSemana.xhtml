@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template-usuario.xhtml">
+	<ui:define name="header">
+	    Add your header here or delete to use the default
+	</ui:define>
+	<ui:define name="cuerpo">	
+	    <h:form id="form-usuarios">
+			<p:panel header="#{msgs.tituloListaUsuarios}">
+				<p:dataTable id="tablalistado" var="var"
+					value="#{controller.tareas}" border="1">
+					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
+						sortBy="#{var.title}">
+						<h:outputText id="filaNombre" value="#{var.title}" />
+					</p:column>
+
+					<p:column id="headerComentarios" headerText="#{msgs.commentTarea}">
+						<h:outputText value="#{var.comments}" />
+					</p:column>
+					
+					<p:column id="headerCategory" headerText="#{msgs.categoriaTarea}">
+						<h:outputText value="#{var.categoryId}" />
+					</p:column>
+
+					<p:column id="headerFecha" headerText="#{msgs.fechaTarea}"
+						sortBy="#{var.planned}">
+						<h:outputText id="filaStatus" value="#{var.planned}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+	<ui:define name="pie">
+	    
+	</ui:define>
+</ui:composition>
+</html>
