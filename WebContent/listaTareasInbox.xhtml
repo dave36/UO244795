@@ -11,7 +11,22 @@
 	<ui:define name="header">
 	    Add your header here or delete to use the default
 	</ui:define>
-	<ui:define name="cuerpo">	
+	<ui:define name="cuerpo">
+		<h:form>
+			<p:panel header="" style="margin-bottom:10px;">
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			        <h:outputText value="Filtrar todas: " />
+			        <p:selectBooleanCheckbox value="#{controller.mostrarTerminadas}" />		          
+    			</h:panelGrid>               	
+               	<p:separator />
+               	
+               	<p:commandButton id="filtrar"
+			   			value="Filtrar"
+			   			action="#{controller.cargarTodas}"
+			   			update="@all"/>
+             </p:panel>
+		</h:form>
+	
 	    <h:form id="form-usuarios">
 			<p:panel header="#{msgs.tituloListaUsuarios}">
 				<p:dataTable id="tablalistado" var="var"
@@ -35,6 +50,12 @@
 					<p:column id="headerFecha" headerText="#{msgs.fechaTarea}"
 						sortBy="#{var.planned}">
 						<h:outputText id="filaStatus" value="#{var.planned}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column id="headerFechaFin" headerText="#{msgs.fechaTarea}">
+						<h:outputText id="filaFechaFin" value="#{var.finished}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>

@@ -54,6 +54,8 @@ public class BeanUsuarios implements Serializable {
 	private boolean hoy = false;
 	
 	private boolean semana = false;
+	
+	private boolean mostrarTerminadas = false;
 
 	public BeanUsuario getUsuario() {
 		return usuario;
@@ -133,6 +135,14 @@ public class BeanUsuarios implements Serializable {
 
 	public void setSemana(boolean semana) {
 		this.semana = semana;
+	}
+
+	public boolean getMostrarTerminadas() {
+		return mostrarTerminadas;
+	}
+
+	public void setMostrarTerminadas(boolean mostrarTerminadas) {
+		this.mostrarTerminadas = mostrarTerminadas;
 	}
 
 	// Se inicia correctamente el MBean inyectado si JSF lo hubiera crea
@@ -312,14 +322,17 @@ public class BeanUsuarios implements Serializable {
 		}
 	}
 	
-	public String tareasInacabadas(){
+	public void cargarTodas(){
 		TaskService ts = Factories.getTaskService();
 		try {
-			tareas = ts.findUnfinishedTasksByUserId(user.getId());
-			return "exito";
+			if(!mostrarTerminadas){
+				tareas = ts.findInboxTasksByUserId(user.getId());
+			}
+			else{
+				tareas = ts.findTasksByUserId(user.getId());
+			}			
 		} catch (BusinessException e) {
 			System.out.println(e.getMessage());
-			return "error";
 		}
 	}
 	

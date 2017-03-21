@@ -180,4 +180,14 @@ public class TaskServiceImpl implements TaskService {
 		});
 	}
 
+	@Override
+	public List<Task> findTasksByUserId(final Long id) throws BusinessException {
+		return new CommandExecutor<List<Task>>().execute( new Command<List<Task>>() {
+			@Override public List<Task> execute() throws BusinessException {
+				
+				return Persistence.getTaskDao().findByUserId(id);
+			}
+		});
+	}
+
 }
