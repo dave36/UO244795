@@ -9,7 +9,7 @@
 
 <ui:composition template="templates/template-usuario.xhtml">
 	<ui:define name="header">
-	    Add your header here or delete to use the default
+	   
 	</ui:define>
 	<ui:define name="cuerpo">	
 	    <h:form id="form-usuarios">
@@ -17,9 +17,9 @@
 				<p:dataTable id="tablalistado" var="var"
 					value="#{controller.tareas}" border="1"
 					selectionMode="single" selection="#{controller.seleccionada}"
-					rowKey="#{var.id}">
+					rowKey="#{var.id}" >
 					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}">
-						<h:outputText id="filaNombre" value="#{var.title}" />
+						<h:outputText id="filaNombre" value="#{var.title}"/>
 					</p:column>
 
 					<p:column id="headerComments" headerText="#{msgs.commentTarea}">

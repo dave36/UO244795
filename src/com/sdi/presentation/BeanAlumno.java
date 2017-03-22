@@ -33,15 +33,11 @@ public class BeanAlumno extends Alumno implements Serializable {
 	
 	//Iniciamos los datos del alumno con los valores por defecto
 	//extraídos del archivo de propiedades correspondiente
+	@SuppressWarnings("unused")
 	public void iniciaAlumno(ActionEvent event) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle bundle =
 		facesContext.getApplication().getResourceBundle(facesContext, "msgs");
-		setId(null);
-		setIduser(bundle.getString("valorDefectoUserId"));
-		setNombre(bundle.getString("valorDefectoNombre"));
-		setApellidos(bundle.getString("valorDefectoApellidos"));
-		setEmail(bundle.getString("valorDefectoCorreo"));
 	}
 
 }

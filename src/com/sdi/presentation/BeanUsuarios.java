@@ -1,6 +1,8 @@
 package com.sdi.presentation;
 
+import java.awt.Color;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -13,6 +15,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
+
+import alb.util.date.DateUtil;
 
 import com.sdi.business.AdminService;
 import com.sdi.business.TaskService;
@@ -155,6 +159,11 @@ public class BeanUsuarios implements Serializable {
 
 	public void setSeleccionada(Task seleccionada) {
 		this.seleccionada = seleccionada;
+		System.out.println(seleccionada.getPlanned());
+	}
+	
+	public Date getDate(){
+		return new Date();
 	}
 
 	// Se inicia correctamente el MBean inyectado si JSF lo hubiera crea

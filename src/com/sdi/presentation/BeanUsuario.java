@@ -38,6 +38,5 @@ public class BeanUsuario extends User implements Serializable {
 				.getResourceBundle(facesContext, "msgs");*/
 		setId(null);
 		setLogin("");
-		//setEmail(bundle.getString("valorDefectoCorreo"));
 	}
 }

@@ -10,18 +10,19 @@
 <ui:composition template="templates/template-usuario.xhtml">
 	<ui:define name="header">
 	    Add your header here or delete to use the default
+	
 	</ui:define>
 	<ui:define name="cuerpo">
 		<h:form>
 			<p:panel header="" style="margin-bottom:10px;">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			        <h:outputText value="Filtrar todas: " />
+			        <h:outputText value="#{msgs.filtrarTodas}: " />
 			        <p:selectBooleanCheckbox value="#{controller.mostrarTerminadas}" />		          
     			</h:panelGrid>               	
                	<p:separator />
                	
                	<p:commandButton id="filtrar"
-			   			value="Filtrar"
+			   			value="#{msgs.botonFiltrar}"
 			   			action="#{controller.cargarTodas}"
 			   			update="@all"/>
              </p:panel>
@@ -34,14 +35,14 @@
 					paginator="true" rows="8" lazy="true" dynamic="true"
 					selectionMode="single" selection="#{controller.seleccionada}"
 					rowKey="#{var.id}">
-					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
-						sortBy="#{var.title}">
+					<p:column filterBy="#{var.title}" id="headerTitulo" headerText="#{msgs.tituloTarea}"
+						filterMatchMode="contains">
 						<h:outputText id="filaNombre" value="#{var.title}" />
 					</p:column>
 
 					<p:column id="headerComments" headerText="#{msgs.commentTarea}"
 						 sortBy="#{var.comments}">
-						<h:outputText value="#{var.comments}" />
+						<h:outputText value="#{var.comments}" styleClass="#{'colored'}"/>
 					</p:column>
 					
 					<p:column id="headerCategory" headerText="#{msgs.categoriaTarea}"
