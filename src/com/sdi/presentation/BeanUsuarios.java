@@ -40,6 +40,11 @@ public class BeanUsuarios implements Serializable {
 
 	private User user = new User();
 	
+	@ManagedProperty(value = "#{tarea}")
+	private BeanTarea tarea;
+	
+	private Task task = new Task();
+	
 	private User seleccionado = new User();
 	
 	private String password;
@@ -49,8 +54,6 @@ public class BeanUsuarios implements Serializable {
 	private List<User> usuarios = null;
 	
 	private List<Task> tareas = null;
-	
-	private Task task = new Task();
 	
 	private Task seleccionada = new Task();
 	
@@ -76,6 +79,14 @@ public class BeanUsuarios implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public Task getTask() {
+		return task;
+	}
+
+	public void setTask(Task task) {
+		this.task = task;
 	}
 	
 	public String getPasswordConfirmacion() {
@@ -181,6 +192,15 @@ public class BeanUsuarios implements Serializable {
 			usuario = new BeanUsuario();
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap().put("usuario", usuario);
+		}
+		
+		tarea = (BeanTarea) FacesContext.getCurrentInstance()
+				.getExternalContext().getSessionMap().get(new String("tarea"));
+		if (tarea == null) {
+			System.out.println("BeanTarea - No existia");
+			tarea = new BeanTarea();
+			FacesContext.getCurrentInstance().getExternalContext()
+					.getSessionMap().put("tarea", tarea);
 		}
 	}
 
@@ -397,32 +417,73 @@ public class BeanUsuarios implements Serializable {
 		Task tarea = task;
 		task = new Task();
 		TaskService ts = Factories.getTaskService();
-		try {
-			tarea.setUserId(user.getId());
-			ts.createTask(tarea);
-		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
-			return "error";
+		if(inbox){
+			try {
+				tarea.setUserId(user.getId());
+				ts.createTask(tarea);
+				return "inbox";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
 		}
-		return "exito";
+		if(hoy){
+			try {
+				tarea.setUserId(user.getId());
+				ts.createTask(tarea);
+				cargarTareas();
+				return "hoy";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		if(semana){
+			try {
+				tarea.setUserId(user.getId());
+				ts.createTask(tarea);
+				return "semana";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "error";
 	}
 	
 	public String edicionDeTarea() {
 		if (seleccionada != null)
 			return "editar";
-		return "";
+		return "error";
 	}
 	
 	public String editarTarea() {
 		TaskService ts = Factories.getTaskService();
-		try {
-			ts.updateTask(seleccionada);
-			cargarTareas();
-		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
-			return "error";
+		if(inbox){
+			try {
+				ts.updateTask(seleccionada);
+				cargarTareas();
+				return "inbox";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
 		}
-		return "editar";
+		else if(hoy){
+			try {
+				ts.updateTask(seleccionada);
+				cargarTareas();
+				return "hoy";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		else if(semana){
+			try {
+				ts.updateTask(seleccionada);
+				cargarTareas();
+				return "semana";
+			} catch (BusinessException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		return "error";
 	}
 	
 	public String cerrarSesion(){
