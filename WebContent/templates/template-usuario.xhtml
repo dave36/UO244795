@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <f:view locale="#{settings.locale}">
 	<h:head>
 		<title>#{msgs.tituloHead}</title>
@@ -20,28 +20,32 @@
 			<br />
 			<table border="5" align="center">
 				<tr>
-					<th class="title">
-						<ui:insert name="titulo">#{msgs.tituloDefectoCabeceraUser} #{controller.user.login}</ui:insert>
+					<th class="title"><ui:insert name="titulo">#{msgs.tituloDefectoCabeceraUser} #{controller.user.login}</ui:insert>
 					</th>
 				</tr>
 			</table>
-			<br/>
+			<br />
 			<p:menubar>
-				<p:submenu label="#{msgs.tituloOpciones}" icon="ui-icon-document">
-						<p:menuitem value="#{msgs.tituloOpcion1User}"
-							action="principalUsuario.xhtml" />
+				<p:submenu id="opciones" label="#{msgs.tituloOpciones}"
+					icon="ui-icon-document">
+					<p:menuitem id="misTareas" value="#{msgs.tituloOpcion1User}"
+						action="principalUsuario.xhtml" />
 				</p:submenu>
-				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
-						<p:menuitem value="#{msgs.tituloCerrarSesion}"
-							action="#{controller.cerrarSesion()}" />
+				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}"
+					icon="fa fa-gear">
+					<p:menuitem value="#{msgs.tituloCerrarSesion}"
+						action="#{controller.cerrarSesion()}" />
 				</p:submenu>
-				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">
-					<p:menuitem value="#{msgs.enlaceIdiomaES}" actionListener="#{settings.setSpanish}" update="@all" />
-					<p:menuitem value="#{msgs.enlaceIdiomaEN}" actionListener="#{settings.setEnglish}" update="@all" /> 
+				<p:submenu style="float:right" label="#{msgs.textoIdioma}"
+					icon="ui-icon-document">
+					<p:menuitem value="#{msgs.enlaceIdiomaES}"
+						actionListener="#{settings.setSpanish}" update="@all" />
+					<p:menuitem value="#{msgs.enlaceIdiomaEN}"
+						actionListener="#{settings.setEnglish}" update="@all" />
 				</p:submenu>
 			</p:menubar>
 		</h:form>
-		<br/>
+		<br />
 
 		<ui:insert name="cuerpo">#{msgs.tituloDefectoCuerpo}</ui:insert>
 

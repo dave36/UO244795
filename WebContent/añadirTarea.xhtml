@@ -20,7 +20,7 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:inputText id="nombreTarea"
+		    			<p:inputText id="nombreTarea" value="#{controller.task.title}"
 		    			required="true" requiredMessage="#{msgs.requiredNombre}">		    			
 		    			</p:inputText>
 		    		</p:column>
@@ -32,7 +32,8 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:inputText id="comentarioTarea">		    			
+		    			<p:inputText id="comentarioTarea"
+		    			value="#{controller.task.comments}">		    			
 		    			</p:inputText>
 		    		</p:column>
 		    	</p:row>
@@ -43,7 +44,8 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-		    			<p:inputText id="categoriaTarea">		    			
+		    			<p:inputText id="categoriaTarea"
+		    			value="#{controller.task.categoryId}">		    			
 		    			</p:inputText>
 		    		</p:column>
 		    	</p:row>
@@ -54,19 +56,7 @@
 		    		</p:column>
 		    		
 		    		<p:column>
-        				<p:calendar id="fechaPlaneada" value="#{calendar.date2}">
-            				<p:ajax event="dateSelect" listener="#{calendar.onDateSelect}"/>
-        				</p:calendar>
-		    		</p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column>
-		    			#{msgs.quintoCampoTarea}
-		    		</p:column>
-		    		
-		    		<p:column>
-		    			<p:calendar id="fechaFinalizada" value="#{calendar.date2}">
+        				<p:calendar id="fechaPlaneada" value="#{controller.task.planned}">
             				<p:ajax event="dateSelect" listener="#{calendar.onDateSelect}"/>
         				</p:calendar>
 		    		</p:column>

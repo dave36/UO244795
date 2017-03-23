@@ -29,36 +29,32 @@ public class Task {
 		return title;
 	}
 	
-	public Task setTitle(String title) {
+	public void setTitle(String title) {
 		this.title = title;
-		return this;
 	}
 	
 	public String getComments() {
 		return comments;
 	}
 	
-	public Task setComments(String comments) {
+	public void setComments(String comments) {
 		this.comments = comments;
-		return this;
 	}
 	
 	public Date getCreated() {
 		return created;
 	}
 	
-	public Task setCreated(Date created) {
+	public void setCreated(Date created) {
 		this.created = created;
-		return this;
 	}
 	
 	public Date getPlanned() {
 		return planned;
 	}
 	
-	public Task setPlanned(Date planned) {
+	public void setPlanned(Date planned) {
 		this.planned = planned;
-		return this;
 	}
 	
 	public Date getFinished() {
@@ -74,9 +70,8 @@ public class Task {
 		return categoryId;
 	}
 	
-	public Task setCategoryId(Long category_id) {
+	public void setCategoryId(Long category_id) {
 		this.categoryId = category_id;
-		return this;
 	}
 	
 	public Long getUserId() {

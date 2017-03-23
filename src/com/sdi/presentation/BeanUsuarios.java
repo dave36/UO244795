@@ -393,7 +393,7 @@ public class BeanUsuarios implements Serializable {
 		return "tarea";
 	}
 	
-	public String crearTarea(){
+	public String crearTarea() {
 		Task tarea = task;
 		task = new Task();
 		TaskService ts = Factories.getTaskService();
@@ -405,6 +405,24 @@ public class BeanUsuarios implements Serializable {
 			return "error";
 		}
 		return "exito";
+	}
+	
+	public String edicionDeTarea() {
+		if (seleccionada != null)
+			return "editar";
+		return "";
+	}
+	
+	public String editarTarea() {
+		TaskService ts = Factories.getTaskService();
+		try {
+			ts.updateTask(seleccionada);
+			cargarTareas();
+		} catch (BusinessException e) {
+			System.out.println(e.getMessage());
+			return "error";
+		}
+		return "editar";
 	}
 	
 	public String cerrarSesion(){
