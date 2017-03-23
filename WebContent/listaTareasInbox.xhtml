@@ -13,6 +13,22 @@
 	
 	</ui:define>
 	<ui:define name="cuerpo">
+	
+		<style type="text/css">
+	 		.colorRed{
+	 			background: #FF2D00;
+	 			color: #000000;
+	 		}
+	 		
+	 		.colorNormal{
+	 			color: #000000;
+	 		}
+	 		
+	 		.colorVerde{
+	 			background: #00E51F;
+	 		}
+		</style>
+	
 		<h:form>
 			<p:panel header="" style="margin-bottom:10px;">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
@@ -32,8 +48,10 @@
 			<p:panel header="#{msgs.tituloListaUsuarios}">
 				<p:dataTable id="tablalistado" var="var"
 					value="#{controller.tareas}" border="1"
-					paginator="true" rows="8" lazy="true" dynamic="true"
+					paginator="true" rows="8"
 					selectionMode="single" selection="#{controller.seleccionada}"
+					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}
+								   #{controller.finalizada(var) ? 'colorVerde' : 'colorNormal'}"
 					rowKey="#{var.id}">
 					<p:column filterBy="#{var.title}" id="headerTitulo" headerText="#{msgs.tituloTarea}"
 						filterMatchMode="contains">
@@ -57,7 +75,7 @@
 						</h:outputText>
 					</p:column>
 					
-					<p:column id="headerFechaFin" headerText="#{msgs.fechaTarea}">
+					<p:column id="headerFechaFin" headerText="#{msgs.fechaFin}">
 						<h:outputText id="filaFechaFin" value="#{var.finished}">
 							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
