@@ -1,6 +1,8 @@
 package com.sdi.presentation;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -14,6 +16,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
+
+import alb.util.log.Log;
 
 import com.sdi.business.AdminService;
 import com.sdi.business.TaskService;
@@ -218,7 +222,7 @@ public class BeanUsuarios implements Serializable {
 			return "error";
 		}else{
 			FacesContext.getCurrentInstance().getExternalContext()
-			.getSessionMap().put("usuario", userByLogin);
+			.getSessionMap().put("LOGIN_USER", userByLogin);
 			user = userByLogin;
 			if(user.getIsAdmin()){
 				return "admin";
@@ -418,7 +422,15 @@ public class BeanUsuarios implements Serializable {
 	//------ Comprobaciones para color
 	
 	public boolean retrasada(Task task){
-		return new Date().after(task.getPlanned());
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		String format = df.format(task.getPlanned());
+		String ahora = df.format(new Date());
+		try {
+			return (df.parse(ahora).after(df.parse(format)));
+		} catch (ParseException e) {
+			Log.warn(e.getMessage());
+		}
+		return false;
 	}
 	
 	public boolean finalizada(Task task){

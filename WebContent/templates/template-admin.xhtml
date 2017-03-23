@@ -12,7 +12,6 @@
 	</h:head>
 	<h:body>
 		<h:form id="form-cabecera">
-			<p:messages for="form-cabecera" globalOnly="true" />
 			<center>
 				<h1>#{msgs.tituloAplicacion1}</h1>
 				<br />
@@ -33,7 +32,7 @@
 							action="#{controller.listarUsuarios}" />
 						
 						<p:menuitem id="menuitemRecargarBD" value="#{msgs.tituloOpcion2Admin}"
-							action="#{controller.inicializarBD}" />
+							action="#{controller.inicializarBD}" update=":mensajes"/>
 				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
 						<p:menuitem value="#{msgs.tituloCerrarSesion}"
@@ -45,6 +44,7 @@
 				</p:submenu>
 			</p:menubar>
 		</h:form>
+		<p:messages id="mensajes" globalOnly="true" />
 		<br/>
 
 		<ui:insert name="cuerpo">#{msgs.tituloDefectoCuerpo}</ui:insert>

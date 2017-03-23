@@ -38,13 +38,13 @@
 		<navigation-case>
 			<from-action>#{controller.login}</from-action>
 			<from-outcome>user</from-outcome>
-			<to-view-id>/principalUsuario.xhtml</to-view-id>
+			<to-view-id>/user/principalUsuario.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-action>#{controller.login}</from-action>
 			<from-outcome>admin</from-outcome>
-			<to-view-id>/principalAdmin.xhtml</to-view-id>
+			<to-view-id>/admin/principalAdmin.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
@@ -70,64 +70,64 @@
 	
 	<!-- Mapa de navegación de principalUsuario.xhtml -->
 	<navigation-rule>
-		<from-view-id>/principalUsuario.xhtml</from-view-id>
+		<from-view-id>/user/principalUsuario.xhtml</from-view-id>
 		<navigation-case>
 			<from-action>#{controller.cargarTareas}</from-action>
 			<from-outcome>inbox</from-outcome>
-			<to-view-id>/listaTareasInbox.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasInbox.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-action>#{controller.cargarTareas}</from-action>
 			<from-outcome>hoy</from-outcome>
-			<to-view-id>/listaTareasHoy.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasHoy.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-action>#{controller.cargarTareas}</from-action>
 			<from-outcome>semana</from-outcome>
-			<to-view-id>/listaTareasSemana.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasSemana.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	
 	<!-- Mapa de navegación de principalAdmin.xhtml -->
 	<navigation-rule>
-		<from-view-id>/principalAdmin.xhtml</from-view-id>
+		<from-view-id>/admin/principalAdmin.xhtml</from-view-id>
 		<navigation-case>
 			<from-action>#{controller.listarUsuarios}</from-action>
 			<from-outcome>exito</from-outcome>
-			<to-view-id>/listaUsuarios.xhtml</to-view-id>
+			<to-view-id>/admin/listaUsuarios.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	
 	<!--  Mapa de navegación de la lista tareas Hoy -->
 	<navigation-rule>
-		<from-view-id>/listaTareasHoy.xhtml</from-view-id>
+		<from-view-id>/user/listaTareasHoy.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>tarea</from-outcome>
-			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	
 		<!--  Mapa de navegación de la lista tareas Inbox -->
 	<navigation-rule>
-		<from-view-id>/listaTareasInbox.xhtml</from-view-id>
+		<from-view-id>/user/listaTareasInbox.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>tarea</from-outcome>
-			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
 	
 		<!--  Mapa de navegación de la lista tareas Semana -->
 	<navigation-rule>
-		<from-view-id>/listaTareasSemana.xhtml</from-view-id>
+		<from-view-id>/user/listaTareasSemana.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>tarea</from-outcome>
-			<to-view-id>/añadirTarea.xhtml</to-view-id>
+			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

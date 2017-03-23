@@ -7,7 +7,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="templates/template-usuario.xhtml">
+<ui:composition template="/templates/template-usuario.xhtml">
 	<ui:define name="header">
 	   
 	</ui:define>
@@ -32,23 +32,25 @@
 					selectionMode="single" selection="#{controller.seleccionada}"
 					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}"
 					rowKey="#{var.id}" >
-					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}">
+					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
+							 style="text-align:center">
 						<h:outputText id="filaNombre" value="#{var.title}"/>
 					</p:column>
 
-					<p:column id="headerComments" headerText="#{msgs.commentTarea}">
+					<p:column id="headerComments" headerText="#{msgs.commentTarea}"
+							  style="text-align:center">
 						<h:outputText value="#{var.comments}" />
 					</p:column>
 					
 					<p:column id="headerCategory" headerText="#{msgs.categoriaTarea}"
-						 sortBy="#{var.categoryId}">
+						 sortBy="#{var.categoryId}" style="text-align:center">
 						<h:outputText value="#{var.categoryId}" />
 					</p:column>
 
 					<p:column id="headerFecha" headerText="#{msgs.fechaTarea}"
-						sortBy="#{var.planned}">
+						sortBy="#{var.planned}"  style="text-align:center">
 						<h:outputText id="filaStatus" value="#{var.planned}">
-							<f:convertDateTime pattern="dd/MM/yyyy" />
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
