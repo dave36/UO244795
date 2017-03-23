@@ -62,6 +62,10 @@
 						value="#{msgs.botonAñadirTarea}" 
 						action="#{controller.añadirTarea()}"
 						update="@form"/>
+					<p:commandButton id="editarTarea" process="@form"
+						value="#{msgs.botonEditarTarea}" 
+						action="#{controller.edicionDeTarea()}"
+						update="@form"/>
 				</div>
 			</p:panel>
 		</h:form>

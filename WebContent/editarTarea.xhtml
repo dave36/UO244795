@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/template-usuario.xhtml">
+	<ui:define name="header">
+
+	</ui:define>
+	<ui:define name="cuerpo">
+		<h:form id="form-editarTarea">
+			<p:panelGrid>
+				<p:row>
+					<p:column>
+		    			#{msgs.primerCampoTarea}
+		    		</p:column>
+
+					<p:column>
+						<p:inputText id="nombreTarea"
+							value="#{controller.seleccionada.title}" required="true"
+							requiredMessage="#{msgs.requiredNombre}">
+						</p:inputText>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+		    			#{msgs.segundoCampoTarea}
+		    		</p:column>
+
+					<p:column>
+						<p:inputText id="comentarioTarea"
+							value="#{controller.seleccionada.comments}">
+						</p:inputText>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+		    			#{msgs.cuartoCampoTarea}
+		    		</p:column>
+
+					<p:column>
+						<p:calendar id="fechaPlaneada"
+							value="#{controller.seleccionada.planned}">
+							<p:ajax event="dateSelect" listener="#{calendar.onDateSelect}" />
+						</p:calendar>
+					</p:column>
+				</p:row>
+
+				<p:row>
+					<p:column>
+
+					</p:column>
+
+					<p:column>
+						<p:commandButton value="#{msgs.botonEditarTarea}" id="editarTarea"
+							action="#{controller.editarTarea()}" update="@form" />
+					</p:column>
+				</p:row>
+			</p:panelGrid>
+			<p:messages for="form-editarTarea" globalOnly="true" />
+		</h:form>
+	</ui:define>
+	<ui:define name="pie">
+	</ui:define>
+</ui:composition>
+</html>

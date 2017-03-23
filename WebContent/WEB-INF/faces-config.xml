@@ -110,9 +110,14 @@
 			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/editarTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
-		<!--  Mapa de navegación de la lista tareas Inbox -->
+	<!--  Mapa de navegación de la lista tareas Inbox -->
 	<navigation-rule>
 		<from-view-id>/user/listaTareasInbox.xhtml</from-view-id>
 		<navigation-case>
@@ -120,14 +125,64 @@
 			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/editarTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
-		<!--  Mapa de navegación de la lista tareas Semana -->
+	<!--  Mapa de navegación de la lista tareas Semana -->
 	<navigation-rule>
 		<from-view-id>/user/listaTareasSemana.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>tarea</from-outcome>
 			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editar</from-outcome>
+			<to-view-id>/editarTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!--  Mapa de navegación de añadir tarea -->
+	<navigation-rule>
+		<from-view-id>/añadirTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>hoy</from-outcome>
+			<to-view-id>/listaTareasHoy.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>inbox</from-outcome>
+			<to-view-id>/listaTareasInbox.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>semana</from-outcome>
+			<to-view-id>/listaTareasSemana.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+	</navigation-rule>
+	
+	<!--  Mapa de navegación de editar tarea -->
+	<navigation-rule>
+		<from-view-id>/editarTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>hoy</from-outcome>
+			<to-view-id>/listaTareasHoy.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>inbox</from-outcome>
+			<to-view-id>/listaTareasInbox.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>semana</from-outcome>
+			<to-view-id>/listaTareasSemana.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>
