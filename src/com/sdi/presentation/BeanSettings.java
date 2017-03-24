@@ -6,18 +6,15 @@ import java.util.Locale;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
+import alb.util.log.Log;
+
 @ManagedBean(name="settings")
 @SessionScoped
 public class BeanSettings implements Serializable {
-
-	//uso de inyeccion de dependencia
-	@ManagedProperty(value="#{alumno}")
-	private BeanAlumno alumno;
 	
 	private static final long serialVersionUID = 2L;
 	private static final Locale ENGLISH = new Locale("en");
@@ -35,11 +32,8 @@ public class BeanSettings implements Serializable {
 		locale = SPANISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			if(alumno != null) {
-				alumno.iniciaAlumno(null);
-			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			Log.warn(e.getMessage());
 		}		
 	}
 	
@@ -47,11 +41,8 @@ public class BeanSettings implements Serializable {
 		locale = ENGLISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
-			if(alumno != null) {
-				alumno.iniciaAlumno(null);
-			}
 		} catch(Exception e) {
-			e.printStackTrace();
+			Log.warn(e.getMessage());
 		}
 	}
 	
@@ -63,14 +54,6 @@ public class BeanSettings implements Serializable {
 	@PostConstruct
 	public void init() {
 		System.out.println("BeanSettings - PostConstruct");
-		//Buscamos el alumno en la sesión. Esto es un patrón factoría claramente.
-		alumno = (BeanAlumno)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(new String("alumno"));
-		//si no existe lo creamos e inicializamos
-		if (alumno == null) {
-			System.out.println("BeanSettings - No existia");
-			alumno = new BeanAlumno();
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("alumno", alumno);
-		}
 	}
 	
 	//Es sólo a modo de traza.
@@ -78,12 +61,4 @@ public class BeanSettings implements Serializable {
 	public void end() {
 		System.out.println("BeanSettings - PreDestroy");
 	}
-
-	public BeanAlumno getAlumno() {
-		return alumno;
-	}
-
-	public void setAlumno(BeanAlumno alumno) {
-		this.alumno = alumno;
-	}	
 }

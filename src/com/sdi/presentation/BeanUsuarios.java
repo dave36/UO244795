@@ -32,29 +32,22 @@ import com.sdi.infrastructure.Factories;
 @ManagedBean(name = "controller")
 @SessionScoped
 public class BeanUsuarios implements Serializable {
+	
 	private static final long serialVersionUID = 55555L;
-	// Se añade este atributo de entidad para recibir el usuario concreto
-	// selecionado de la tabla o de un formulario
-	// Es necesario inicializarlo para que al entrar desde el formulario de
-	// AltaForm.xml se puedan
-	// dejar los avalores en un objeto existente.
-
 	// uso de inyección de dependencia
 	@ManagedProperty(value = "#{usuario}")
 	private BeanUsuario usuario;
-
-	private User user = new User();
 	
 	@ManagedProperty(value = "#{tarea}")
 	private BeanTarea tarea;
 	
-	private Task task = new Task();
+	private User user = new User();
 	
 	private User seleccionado = new User();
 	
-	private String password;
+	private Task task = new Task();
 	
-	private String passwordConfirmacion;
+	private Task seleccionada = new Task();
 	
 	private List<User> usuarios = null;
 	
@@ -62,7 +55,9 @@ public class BeanUsuarios implements Serializable {
 	
 	private List<Category> categorias = null;
 	
-	private Task seleccionada = new Task();
+	private String password;
+	
+	private String passwordConfirmacion;
 	
 	private boolean inbox = false;
 	
@@ -242,7 +237,7 @@ public class BeanUsuarios implements Serializable {
 		try {
 			userByLogin = us.findLoggableUser(usuario.getLogin(), usuario.getPassword());
 		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
+			Log.warn(e.getMessage());
 		}
 		if(userByLogin == null){
 			FacesContext.getCurrentInstance().addMessage("form-login", 
@@ -270,7 +265,7 @@ public class BeanUsuarios implements Serializable {
 			try {
 				userService.registerUser(uregistro);
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 				return "error";
 			}
 			return "exito";
@@ -293,7 +288,7 @@ public class BeanUsuarios implements Serializable {
 				}
 				us.updateUserDetails(user);
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 		password="";
@@ -323,7 +318,7 @@ public class BeanUsuarios implements Serializable {
 			usuarios = as.findAllUsers();
 			return "exito";
 		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
+			Log.warn(e.getMessage());
 		}
 		return "error";
 	}
@@ -335,20 +330,20 @@ public class BeanUsuarios implements Serializable {
 				try {
 					as.disableUser(seleccionado.getId());
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					Log.warn(e.getMessage());
 				}
 			}
 			else{
 				try {
 					as.enableUser(seleccionado.getId());
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					Log.warn(e.getMessage());
 				}
 			}
 			try {
 				usuarios = as.findAllUsers();
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 	}
@@ -359,12 +354,12 @@ public class BeanUsuarios implements Serializable {
 			try {
 				as.deepDeleteUser(seleccionado.getId());
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 			try {
 				usuarios = as.findAllUsers();
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 	}
@@ -384,7 +379,7 @@ public class BeanUsuarios implements Serializable {
 				tareas = ts.findTasksByUserId(user.getId());
 			}			
 		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
+			Log.warn(e.getMessage());
 		}
 	}
 	
@@ -406,7 +401,7 @@ public class BeanUsuarios implements Serializable {
 					tareas = ts.findInboxTasksByUserId(user.getId());
 					return "inbox";
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					Log.warn(e.getMessage());
 				}
 			}
 			else if(hoy){
@@ -414,7 +409,7 @@ public class BeanUsuarios implements Serializable {
 					tareas = ts.findTodayTasksByUserId(user.getId());
 					return "hoy";
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					Log.warn(e.getMessage());
 				}
 			}
 			else if(semana){
@@ -422,7 +417,7 @@ public class BeanUsuarios implements Serializable {
 					tareas = ts.findWeekTasksByUserId(user.getId());
 					return "semana";
 				} catch (BusinessException e) {
-					System.out.println(e.getMessage());
+					Log.warn(e.getMessage());
 				}
 			}
 			return "error";
@@ -435,7 +430,7 @@ public class BeanUsuarios implements Serializable {
 			ts.markTaskAsFinished(seleccionada.getId());
 			cargarTareas();
 		} catch (BusinessException e) {
-			System.out.println(e.getMessage());
+			Log.warn(e.getMessage());
 		}
 	}
 	
@@ -467,7 +462,6 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String editarTarea() {
-		System.out.println(seleccionada.getComments());
 		TaskService ts = Factories.getTaskService();
 		if(inbox){
 			try {
@@ -475,7 +469,7 @@ public class BeanUsuarios implements Serializable {
 				cargarTodas();
 				return "inbox";
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 		else if(hoy){
@@ -484,7 +478,7 @@ public class BeanUsuarios implements Serializable {
 				cargarTareas();
 				return "hoy";
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 		else if(semana){
@@ -493,7 +487,7 @@ public class BeanUsuarios implements Serializable {
 				cargarTareas();
 				return "semana";
 			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+				Log.warn(e.getMessage());
 			}
 		}
 		return "error";
@@ -562,9 +556,8 @@ public class BeanUsuarios implements Serializable {
 				throw new ValidatorException(message);
 			}
 		} catch (BusinessException e) {
-			e.printStackTrace();
-		}
-		
+			Log.warn(e.getMessage());
+		}		
 	}
 	
 	public void passwValidator(FacesContext context, UIComponent component,
