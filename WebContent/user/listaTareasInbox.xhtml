@@ -13,70 +13,69 @@
 	
 	</ui:define>
 	<ui:define name="cuerpo">
-	
+
 		<style type="text/css">
-	 		.colorRed{
-	 			background: #FF2D00;
-	 			color: #000000;
-	 		}
-	 		
-	 		.colorNormal{
-	 			color: #000000;
-	 		}
-	 		
-	 		.colorVerde{
-	 			background: #00E51F;
-	 		}
-		</style>
-	
+.colorRed {
+	background: #FF2D00;
+	color: #000000;
+}
+
+.colorNormal {
+	color: #000000;
+}
+
+.colorVerde {
+	background: #00E51F;
+}
+</style>
+
 		<h:form id="form-listadoInbox">
 			<p:panel header="" style="margin-bottom:10px;">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-			        <h:outputText value="#{msgs.filtrarTodas}: " />
-			        <p:selectBooleanCheckbox value="#{controller.mostrarTerminadas}" />		          
-    			</h:panelGrid>               	
-               	<p:separator />
-               	
-               	<p:commandButton id="filtrar"
-			   			value="#{msgs.botonFiltrar}"
-			   			action="#{controller.cargarTodas}"
-			   			update="@all"/>
-             </p:panel>
+					<h:outputText value="#{msgs.filtrarTodas}: " />
+					<p:selectBooleanCheckbox id="filtrarTodas"
+						value="#{controller.mostrarTerminadas}" />
+				</h:panelGrid>
+				<p:separator />
+
+				<p:commandButton id="filtrar" value="#{msgs.botonFiltrar}"
+					action="#{controller.cargarTodas}" update="@all" />
+			</p:panel>
 		</h:form>
-	
-	    <h:form id="form-usuarios">
+
+		<h:form id="form-usuarios">
 			<p:panel header="#{msgs.tituloListaUsuarios}">
 				<p:dataTable id="tablalistado" var="var"
-					value="#{controller.tareas}" border="1"
-					paginator="true" rows="8"
+					value="#{controller.tareas}" border="1" paginator="true" rows="8"
 					selectionMode="single" selection="#{controller.seleccionada}"
 					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}
 								   #{controller.finalizada(var) ? 'colorVerde' : 'colorNormal'}"
 					rowKey="#{var.id}" rendered="true">
-					<p:column filterBy="#{var.title}" id="headerTitulo" headerText="#{msgs.tituloTarea}"
-						filterMatchMode="contains"  style="text-align:center">
+					<p:column filterBy="#{var.title}" id="headerTitulo"
+						headerText="#{msgs.tituloTarea}" filterMatchMode="contains"
+						style="text-align:center">
 						<h:outputText id="filaNombre" value="#{var.title}" />
 					</p:column>
 
 					<p:column id="headerComments" headerText="#{msgs.commentTarea}"
-						 sortBy="#{var.comments}" style="text-align:center">
-						<h:outputText value="#{var.comments}" styleClass="#{'colored'}"/>
+						sortBy="#{var.comments}" style="text-align:center">
+						<h:outputText value="#{var.comments}" styleClass="#{'colored'}" />
 					</p:column>
-					
+
 					<p:column id="headerCategory" headerText="#{msgs.categoriaTarea}"
-						 sortBy="#{var.categoryId}" style="text-align:center">
+						sortBy="#{var.categoryId}" style="text-align:center">
 						<h:outputText value="#{var.categoryId}" />
 					</p:column>
 
 					<p:column id="headerFecha" headerText="#{msgs.fechaTarea}"
 						sortBy="#{var.planned}" style="text-align:center">
 						<h:outputText id="filaStatus" value="#{var.planned}">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" />
 						</h:outputText>
 					</p:column>
-					
+
 					<p:column id="headerFechaFin" headerText="#{msgs.fechaFin}"
-								 style="text-align:center">
+						style="text-align:center">
 						<h:outputText id="filaFechaFin" value="#{var.finished}">
 							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" />
 						</h:outputText>
@@ -84,19 +83,17 @@
 				</p:dataTable>
 				<div>
 					<p:commandButton id="eliminar" process="@form"
-						value="#{msgs.botonFinalizarTarea}" 
-						action="#{controller.finalizarTarea()}"
-						update="@form" />
+						value="#{msgs.botonFinalizarTarea}"
+						action="#{controller.finalizarTarea()}" update="@form" />
 					<p:commandButton id="editarTarea" process="@form"
-						value="#{msgs.botonEditarTarea}" 
-						action="#{controller.edicionDeTarea()}"
-						update="@form"/>
+						value="#{msgs.botonEditarTarea}"
+						action="#{controller.edicionDeTarea()}" update="@form" />
 				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>
 	<ui:define name="pie">
-	    
+
 	</ui:define>
 </ui:composition>
 </html>
