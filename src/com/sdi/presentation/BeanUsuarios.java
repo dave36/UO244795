@@ -343,7 +343,6 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void eliminarUsuario(){
-		System.out.println(seleccionado.getLogin());
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
 			try {
@@ -417,39 +416,18 @@ public class BeanUsuarios implements Serializable {
 		return "tarea";
 	}
 	
-	public String crearTarea() {
+	public String crearTarea(){
 		Task tarea = task;
 		task = new Task();
 		TaskService ts = Factories.getTaskService();
-		if(inbox){
-			try {
-				tarea.setUserId(user.getId());
-				ts.createTask(tarea);
-				return "inbox";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
-			}
+		tarea.setUserId(user.getId());
+		try {
+			ts.createTask(tarea);
+			return "exito";
+		} catch (BusinessException e) {
+			Log.warn(e.getMessage());
+			return "error";
 		}
-		if(hoy){
-			try {
-				tarea.setUserId(user.getId());
-				ts.createTask(tarea);
-				cargarTareas();
-				return "hoy";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		if(semana){
-			try {
-				tarea.setUserId(user.getId());
-				ts.createTask(tarea);
-				return "semana";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-		return "error";
 	}
 	
 	public String edicionDeTarea() {
@@ -501,13 +479,15 @@ public class BeanUsuarios implements Serializable {
 	//------ Comprobaciones para color
 	
 	public boolean retrasada(Task task){
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		String format = df.format(task.getPlanned());
-		String ahora = df.format(new Date());
-		try {
-			return (df.parse(ahora).after(df.parse(format)));
-		} catch (ParseException e) {
-			Log.warn(e.getMessage());
+		if(task.getPlanned()!=null){
+			SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			String format = df.format(task.getPlanned());
+			String ahora = df.format(new Date());
+			try {
+				return (df.parse(ahora).after(df.parse(format)));
+			} catch (ParseException e) {
+				Log.warn(e.getMessage());
+			}
 		}
 		return false;
 	}

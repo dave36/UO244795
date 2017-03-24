@@ -89,6 +89,12 @@
 			<to-view-id>/user/listaTareasSemana.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
+		<navigation-case>
+			<from-action>#{controller.añadirTarea()}</from-action>
+			<from-outcome>tarea</from-outcome>
+			<to-view-id>/user/añadirTarea.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 	</navigation-rule>
 	
 	<!-- Mapa de navegación de principalAdmin.xhtml -->
@@ -149,20 +155,25 @@
 	
 	<!--  Mapa de navegación de añadir tarea -->
 	<navigation-rule>
-		<from-view-id>/añadirTarea.xhtml</from-view-id>
+		<from-view-id>/user/añadirTarea.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>exito</from-outcome>
+			<to-view-id>/user/principalUsuario.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>hoy</from-outcome>
-			<to-view-id>/listaTareasHoy.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasHoy.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>inbox</from-outcome>
-			<to-view-id>/listaTareasInbox.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasInbox.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>semana</from-outcome>
-			<to-view-id>/listaTareasSemana.xhtml</to-view-id>
+			<to-view-id>/user/listaTareasSemana.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

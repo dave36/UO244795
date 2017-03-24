@@ -52,7 +52,7 @@
 					selectionMode="single" selection="#{controller.seleccionada}"
 					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}
 								   #{controller.finalizada(var) ? 'colorVerde' : 'colorNormal'}"
-					rowKey="#{var.id}">
+					rowKey="#{var.id}" rendered="true">
 					<p:column filterBy="#{var.title}" id="headerTitulo" headerText="#{msgs.tituloTarea}"
 						filterMatchMode="contains"  style="text-align:center">
 						<h:outputText id="filaNombre" value="#{var.title}" />
@@ -87,10 +87,6 @@
 						value="#{msgs.botonFinalizarTarea}" 
 						action="#{controller.finalizarTarea()}"
 						update="@form" />
-					<p:commandButton id="añadirTarea" process="@form"
-						value="#{msgs.botonAñadirTarea}" 
-						action="#{controller.añadirTarea()}"
-						update="@form"/>
 					<p:commandButton id="editarTarea" process="@form"
 						value="#{msgs.botonEditarTarea}" 
 						action="#{controller.edicionDeTarea()}"

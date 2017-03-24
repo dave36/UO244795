@@ -27,6 +27,11 @@
 			</table>
 			<br/>
 			<p:menubar>
+				<p:submenu id="opciones" label="#{msgs.tituloOpciones}"
+					icon="ui-icon-document">
+					<p:menuitem id="añadirTarea" value="#{msgs.botonAñadirTarea}"
+						action="#{controller.añadirTarea()}" />
+				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
 						<p:menuitem value="#{msgs.tituloCerrarSesion}"
 							action="#{controller.cerrarSesion()}" />
