@@ -23,6 +23,7 @@ import com.sdi.business.AdminService;
 import com.sdi.business.TaskService;
 import com.sdi.business.UserService;
 import com.sdi.business.exception.BusinessException;
+import com.sdi.dto.Category;
 import com.sdi.dto.Task;
 import com.sdi.dto.User;
 import com.sdi.dto.types.UserStatus;
@@ -58,6 +59,8 @@ public class BeanUsuarios implements Serializable {
 	private List<User> usuarios = null;
 	
 	private List<Task> tareas = null;
+	
+	private List<Category> categorias = null;
 	
 	private Task seleccionada = new Task();
 	
@@ -173,6 +176,14 @@ public class BeanUsuarios implements Serializable {
 		this.seleccionada = seleccionada;
 	}
 	
+	public List<Category> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Category> categorias) {
+		this.categorias = categorias;
+	}
+
 	public Date getDate(){
 		return new Date();
 	}
@@ -236,9 +247,9 @@ public class BeanUsuarios implements Serializable {
 		if(userByLogin == null){
 			FacesContext.getCurrentInstance().addMessage("form-login", 
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Usuario o clave no valida",
+							getBundle().getString("noUserPass"),
 							"Error en el login"));
-			
+			usuario.setLogin("");
 			return "error";
 		}else{
 			FacesContext.getCurrentInstance().getExternalContext()
@@ -267,7 +278,7 @@ public class BeanUsuarios implements Serializable {
 		else{
 			FacesContext.getCurrentInstance().addMessage("form-registro", 
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Las contraseñas deben coincidir",
+							getBundle().getString("igualPass"),
 							"Error en el login"));
 			return "error";
 		}
@@ -295,13 +306,13 @@ public class BeanUsuarios implements Serializable {
 			as.dropAndInsert();
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Se han cargado los usuarios correctamente",
+							getBundle().getString("userBienCargados"),
 							"Cargar usuarios"));
 		} catch (BusinessException e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Error al cargar usuarios",
+							getBundle().getString("userMalCargados"),
 							"Error al cargar usuarios"));
 		}
 	}
@@ -358,6 +369,11 @@ public class BeanUsuarios implements Serializable {
 		}
 	}
 	
+	public String volverAListas(){
+		inbox = hoy = semana = mostrarTerminadas = false;
+		return "listas";
+	}
+	
 	public void cargarTodas(){
 		TaskService ts = Factories.getTaskService();
 		try {
@@ -374,32 +390,43 @@ public class BeanUsuarios implements Serializable {
 	
 	
 	public String cargarTareas(){
-		TaskService ts = Factories.getTaskService();
-		if(inbox){
-			try {
-				tareas = ts.findInboxTasksByUserId(user.getId());
-				return "inbox";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
-			}
+		if(inbox&&hoy || inbox&&semana || semana&&hoy){
+			FacesContext.getCurrentInstance().addMessage("form-usuario", 
+					new FacesMessage(FacesMessage.SEVERITY_ERROR,
+							getBundle().getString("seleccionLista"),
+							"Error al cargar usuarios"));
+			inbox = hoy = semana = false;
+			return "";
 		}
-		else if(hoy){
-			try {
-				tareas = ts.findTodayTasksByUserId(user.getId());
-				return "hoy";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+		else{
+			cargarCategorias();
+			TaskService ts = Factories.getTaskService();
+			if(inbox){
+				try {
+					tareas = ts.findInboxTasksByUserId(user.getId());
+					return "inbox";
+				} catch (BusinessException e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
-		else if(semana){
-			try {
-				tareas = ts.findWeekTasksByUserId(user.getId());
-				return "semana";
-			} catch (BusinessException e) {
-				System.out.println(e.getMessage());
+			else if(hoy){
+				try {
+					tareas = ts.findTodayTasksByUserId(user.getId());
+					return "hoy";
+				} catch (BusinessException e) {
+					System.out.println(e.getMessage());
+				}
 			}
+			else if(semana){
+				try {
+					tareas = ts.findWeekTasksByUserId(user.getId());
+					return "semana";
+				} catch (BusinessException e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			return "error";
 		}
-		return "error";
 	}
 	
 	public void finalizarTarea(){
@@ -413,6 +440,7 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String añadirTarea() {
+		cargarCategorias();
 		return "tarea";
 	}
 	
@@ -431,17 +459,20 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String edicionDeTarea() {
-		if (seleccionada != null)
+		if (seleccionada != null){
+			cargarCategorias();
 			return "editar";
+		}
 		return "error";
 	}
 	
 	public String editarTarea() {
+		System.out.println(seleccionada.getComments());
 		TaskService ts = Factories.getTaskService();
 		if(inbox){
 			try {
 				ts.updateTask(seleccionada);
-				cargarTareas();
+				cargarTodas();
 				return "inbox";
 			} catch (BusinessException e) {
 				System.out.println(e.getMessage());
@@ -468,12 +499,30 @@ public class BeanUsuarios implements Serializable {
 		return "error";
 	}
 	
+	public void cargarCategorias(){
+		TaskService ts = Factories.getTaskService();
+		try {
+			categorias = ts.findCategoriesByUserId(user.getId());
+		} catch (BusinessException e) {
+			Log.warn(e.getMessage());
+		}
+	}
+	
 	public String cerrarSesion(){
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
 											getExternalContext().
 											getSession(false);
 		session.invalidate();
 		return "cerrar";
+	}
+	
+	//------ Bundle
+	
+	private ResourceBundle getBundle(){
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = 
+		facesContext.getApplication().getResourceBundle(facesContext, "msgs");
+		return bundle;
 	}
 	
 	//------ Comprobaciones para color
@@ -508,7 +557,8 @@ public class BeanUsuarios implements Serializable {
 		try {
 			User login = us.findRepeatUser(userlogin);
 			if(login!=null){
-				FacesMessage message = new FacesMessage("Login repetido");
+				FacesMessage message = new FacesMessage(
+						getBundle().getString("loginRep"));
 				throw new ValidatorException(message);
 			}
 		} catch (BusinessException e) {
@@ -536,7 +586,8 @@ public class BeanUsuarios implements Serializable {
         	}
         }
         if(!(numeros&&letras) || password.length() < 8){
-        	FacesMessage message = new FacesMessage("Contraseña incorrecta");
+        	FacesMessage message = new FacesMessage(
+        			getBundle().getString("malPass"));
         	throw new ValidatorException(message);
         }
 	}

@@ -13,51 +13,35 @@
 	</ui:define>
 	<ui:define name="cuerpo">
 		<h:form id="form-admin">
-		    <p:panelGrid>
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.idPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.id}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.isAdmPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.isAdmin}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.statusPrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.status}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.nombrePrincipal}"/></p:column>
-		    		<p:column><h:outputText value="#{controller.user.login}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.emailPrincipal}"/></p:column>
-		    		<p:column><h:inputText value="#{controller.user.email}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.password}"/></p:column>
-		    		<p:column><p:password value="#{controller.password}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column><h:outputText value="#{msgs.rpassword}"/></p:column>
-		    		<p:column><p:password value="#{controller.passwordConfirmacion}"/></p:column>
-		    	</p:row>
-		    	
-		    	<p:row>
-		    		<p:column></p:column>
-		    		<p:column><p:commandButton
-		    					id="modificar"
-		   						value="#{msgs.botonModificar}"
-		   						action="#{controller.modificar}"/>
+			<p:panel>
+				<p:dataTable border="1" var="var"
+					value="#{controller.user}">
+					<p:column headerText="#{msgs.idPrincipal}" 
+								style="text-align:center">
+						<h:outputText value="#{var.id}"/>			
 					</p:column>
-		    	</p:row>
-		    </p:panelGrid>
+					
+					<p:column headerText="#{msgs.isAdmPrincipal}" 
+								style="text-align:center">
+						<h:outputText value="#{var.isAdmin}"/>			
+					</p:column>
+					
+					<p:column headerText="#{msgs.statusPrincipal}" 
+								style="text-align:center">
+						<h:outputText value="#{var.status}"/>			
+					</p:column>
+					
+					<p:column headerText="#{msgs.nombrePrincipal}" 
+								style="text-align:center">
+						<h:outputText value="#{var.login}"/>			
+					</p:column>
+					
+					<p:column headerText="#{msgs.emailPrincipal}" 
+								style="text-align:center">
+						<h:outputText value="#{var.email}"/>			
+					</p:column>
+				</p:dataTable>
+			</p:panel>		    
 		</h:form>
 	</ui:define>
 	<ui:define name="pie">

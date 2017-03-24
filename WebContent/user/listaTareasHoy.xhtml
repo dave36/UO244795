@@ -30,7 +30,8 @@
 				<p:dataTable id="tablalistado" var="var"
 					value="#{controller.tareas}" border="1"
 					selectionMode="single" selection="#{controller.seleccionada}"
-					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}"
+					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}
+								   #{controller.finalizada(var) ? 'colorVerde' : 'colorNormal'}"
 					rowKey="#{var.id}" >
 					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
 							 style="text-align:center">
