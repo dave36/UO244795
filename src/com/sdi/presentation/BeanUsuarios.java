@@ -191,14 +191,14 @@ public class BeanUsuarios implements Serializable {
 	// ya estaba construido y en @PostConstruct SI.
 	@PostConstruct
 	public void init() {
-		System.out.println("BeanUsuarios - PostConstruct");
+		Log.info("BeanUsuarios - PostConstruct");
 		// Buscamos el usuario en la sesión. Esto es un patrón factoría
 		// claramente.
 		usuario = (BeanUsuario) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("usuario"));
 		// si no existe lo creamos e inicializamos
 		if (usuario == null) {
-			System.out.println("BeanUsuarios - No existia");
+			Log.info("BeanUsuarios - No existia - Se ha creado una instancia");
 			usuario = new BeanUsuario();
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap().put("usuario", usuario);
@@ -207,7 +207,6 @@ public class BeanUsuarios implements Serializable {
 		tarea = (BeanTarea) FacesContext.getCurrentInstance()
 				.getExternalContext().getSessionMap().get(new String("tarea"));
 		if (tarea == null) {
-			System.out.println("BeanTarea - No existia");
 			tarea = new BeanTarea();
 			FacesContext.getCurrentInstance().getExternalContext()
 					.getSessionMap().put("tarea", tarea);
@@ -216,7 +215,7 @@ public class BeanUsuarios implements Serializable {
 
 	@PreDestroy
 	public void end() {
-		System.out.println("BeanUsuarios - PreDestroy");
+		Log.info("BeanUsuarios - PreDestroy");
 	}
 
 	public void iniciaUsuario(ActionEvent event) {
@@ -226,11 +225,12 @@ public class BeanUsuarios implements Serializable {
 		ResourceBundle bundle = facesContext.getApplication()
 				.getResourceBundle(facesContext, "msgs");
 		usuario.setId(null);
-		usuario.setLogin(bundle.getString("valorDefectoUserId"));
-		usuario.setEmail(bundle.getString("valorDefectoCorreo"));
+		usuario.setLogin(bundle.getString(null));
+		usuario.setEmail(bundle.getString(null));
 	}
 
 	public String login() {
+		Log.info("Intento de login del usuario " + usuario.getLogin());
 		UserService us = Factories.getUserService();
 		User userByLogin = null;
 		
@@ -245,11 +245,13 @@ public class BeanUsuarios implements Serializable {
 							getBundle().getString("noUserPass"),
 							"Error en el login"));
 			usuario.setLogin("");
+			Log.warn("El usuario " + usuario.getLogin() + " no está en el sistema");
 			return "error";
 		}else{
 			FacesContext.getCurrentInstance().getExternalContext()
 			.getSessionMap().put("LOGIN_USER", userByLogin);
 			user = userByLogin;
+			Log.info("El usuario " + user.getLogin() + " ha iniciado sesión");
 			if(user.getIsAdmin()){
 				return "admin";
 			}
@@ -258,6 +260,7 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String registrar(){
+		Log.info("Intento de registro en la aplicación");
 		User uregistro = user;
 		user = new User();
 		if(uregistro.getPassword().equals(passwordConfirmacion)){
@@ -268,6 +271,8 @@ public class BeanUsuarios implements Serializable {
 				Log.warn(e.getMessage());
 				return "error";
 			}
+			Log.info("El usuario " + uregistro.getLogin() + " se ha registrado"
+					+ " en el sistema");
 			return "exito";
 		}
 		else{
@@ -275,24 +280,10 @@ public class BeanUsuarios implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							getBundle().getString("igualPass"),
 							"Error en el login"));
+			Log.warn("El anónimo " + uregistro.getLogin() + " se ha intentado"
+					+ " registrar con contraseñas diferentes");
 			return "error";
 		}
-	}
-	
-	public void modificar(){
-		if(password.equals(passwordConfirmacion)){
-			UserService us = Factories.getUserService();
-			try {
-				if(password!=null && passwordConfirmacion!=null){
-					user.setPassword(password);
-				}
-				us.updateUserDetails(user);
-			} catch (BusinessException e) {
-				Log.warn(e.getMessage());
-			}
-		}
-		password="";
-		passwordConfirmacion="";
 	}
 	
 	public void inicializarBD(){
@@ -303,8 +294,10 @@ public class BeanUsuarios implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							getBundle().getString("userBienCargados"),
 							"Cargar usuarios"));
+			Log.info("El administrador " + user.getLogin() + " ha reiniciado la"
+					+ " base de datos de forma correcta");
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			Log.warn(e.getMessage());
 			FacesContext.getCurrentInstance().addMessage(null, 
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							getBundle().getString("userMalCargados"),
@@ -313,9 +306,12 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String listarUsuarios(){
+		Log.info("El administrador " + user.getLogin() + " solicita listar los "
+				+ "usuarios del sistema");
 		AdminService as = Factories.getAdminService();
 		try {
 			usuarios = as.findAllUsers();
+			Log.info("Usuarios correctamente listados");
 			return "exito";
 		} catch (BusinessException e) {
 			Log.warn(e.getMessage());
@@ -324,6 +320,8 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void modificarStatus(){
+		Log.info("El administrador " + user.getLogin() + "solicita cambiar el "
+				+ "status del usuario " + seleccionado.getLogin());
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
 			if(seleccionado.getStatus().equals(UserStatus.ENABLED)){
@@ -340,8 +338,11 @@ public class BeanUsuarios implements Serializable {
 					Log.warn(e.getMessage());
 				}
 			}
+			Log.info("Cambiado el status a " + seleccionado.getStatus() + 
+					" de forma correcta");
 			try {
 				usuarios = as.findAllUsers();
+				Log.info("Se recarga la lista de usuarios correctamente");
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
 			}
@@ -349,15 +350,20 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void eliminarUsuario(){
+		Log.info("El administrador " + user.getLogin() + " solicita eliminar al"
+				+ " usuario " + seleccionado.getLogin());
 		if(!seleccionado.getIsAdmin()){
 			AdminService as = Factories.getAdminService();
 			try {
 				as.deepDeleteUser(seleccionado.getId());
+				Log.info("El usuario " + seleccionado.getLogin() + " ha sido "
+						+ "eliminado correctamente");
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
 			}
 			try {
 				usuarios = as.findAllUsers();
+				Log.info("Se recarga la lista de usuarios correctamente");
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
 			}
@@ -370,13 +376,17 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void cargarTodas(){
+		Log.info("El usuario " + user.getLogin() + " solicita listar las tareas"
+				+ " de Inbox");
 		TaskService ts = Factories.getTaskService();
 		try {
 			if(!mostrarTerminadas){
 				tareas = ts.findInboxTasksByUserId(user.getId());
+				Log.info("Tareas de Inbox listadas correctamente");
 			}
 			else{
 				tareas = ts.findTasksByUserId(user.getId());
+				Log.info("Tareas de Inbox mas finalizadas listadas correctamente");
 			}			
 		} catch (BusinessException e) {
 			Log.warn(e.getMessage());
@@ -385,12 +395,15 @@ public class BeanUsuarios implements Serializable {
 	
 	
 	public String cargarTareas(){
+		Log.info("El usuario " + user.getLogin() + " solicita listar tareas");
 		if(inbox&&hoy || inbox&&semana || semana&&hoy){
 			FacesContext.getCurrentInstance().addMessage("form-usuario", 
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
 							getBundle().getString("seleccionLista"),
 							"Error al cargar usuarios"));
 			inbox = hoy = semana = false;
+			Log.warn("El usuario " + user.getLogin() + " ha intentado listar mas"
+					+ " de una lista de tareas a la vez");
 			return "";
 		}
 		else{
@@ -399,6 +412,7 @@ public class BeanUsuarios implements Serializable {
 			if(inbox){
 				try {
 					tareas = ts.findInboxTasksByUserId(user.getId());
+					Log.info("Tareas de Inbox listadas correctamente");
 					return "inbox";
 				} catch (BusinessException e) {
 					Log.warn(e.getMessage());
@@ -407,6 +421,7 @@ public class BeanUsuarios implements Serializable {
 			else if(hoy){
 				try {
 					tareas = ts.findTodayTasksByUserId(user.getId());
+					Log.info("Tareas de Hoy listadas correctamente");
 					return "hoy";
 				} catch (BusinessException e) {
 					Log.warn(e.getMessage());
@@ -415,6 +430,7 @@ public class BeanUsuarios implements Serializable {
 			else if(semana){
 				try {
 					tareas = ts.findWeekTasksByUserId(user.getId());
+					Log.info("Tareas de Semana listadas correctamente");
 					return "semana";
 				} catch (BusinessException e) {
 					Log.warn(e.getMessage());
@@ -425,16 +441,21 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public void finalizarTarea(){
+		Log.info("El usuario " + user.getLogin() + " solicita finalizar la tarea "
+				+ seleccionada.getTitle());
 		TaskService ts = Factories.getTaskService();
 		try {
 			ts.markTaskAsFinished(seleccionada.getId());
 			cargarTareas();
+			Log.info("Tarea eliminada correctamente y lista de tareas recargada");
 		} catch (BusinessException e) {
 			Log.warn(e.getMessage());
 		}
 	}
 	
 	public String añadirTarea() {
+		Log.info("El usuario " + user.getLogin() + " solicita crear una nueva "
+				+ "tarea");
 		cargarCategorias();
 		return "tarea";
 	}
@@ -446,6 +467,7 @@ public class BeanUsuarios implements Serializable {
 		tarea.setUserId(user.getId());
 		try {
 			ts.createTask(tarea);
+			Log.info("Tarea " + tarea.getTitle() + " creada correctamente");
 			return "exito";
 		} catch (BusinessException e) {
 			Log.warn(e.getMessage());
@@ -454,10 +476,13 @@ public class BeanUsuarios implements Serializable {
 	}
 	
 	public String edicionDeTarea() {
+		Log.info("El usuario " + user.getLogin() + " solicita editar la tarea "
+				+ seleccionada.getTitle());
 		if (seleccionada != null){
 			cargarCategorias();
 			return "editar";
 		}
+		Log.warn("No se ha seleccionado tarea en la lista");
 		return "error";
 	}
 	
@@ -467,6 +492,8 @@ public class BeanUsuarios implements Serializable {
 			try {
 				ts.updateTask(seleccionada);
 				cargarTodas();
+				Log.info("La tarea " + seleccionada.getTitle() + " ha sido "
+						+ "editada correctamente y la lista Inbox se ha recargado");
 				return "inbox";
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
@@ -476,6 +503,8 @@ public class BeanUsuarios implements Serializable {
 			try {
 				ts.updateTask(seleccionada);
 				cargarTareas();
+				Log.info("La tarea " + seleccionada.getTitle() + " ha sido "
+						+ "editada correctamente y la lista Hoy se ha recargado");
 				return "hoy";
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
@@ -485,6 +514,8 @@ public class BeanUsuarios implements Serializable {
 			try {
 				ts.updateTask(seleccionada);
 				cargarTareas();
+				Log.info("La tarea " + seleccionada.getTitle() + " ha sido "
+						+ "editada correctamente y la lista Semana se ha recargado");
 				return "semana";
 			} catch (BusinessException e) {
 				Log.warn(e.getMessage());
@@ -497,16 +528,20 @@ public class BeanUsuarios implements Serializable {
 		TaskService ts = Factories.getTaskService();
 		try {
 			categorias = ts.findCategoriesByUserId(user.getId());
+			Log.info("Se han cargado las categorias del usuario " 
+					+ user.getLogin());
 		} catch (BusinessException e) {
 			Log.warn(e.getMessage());
 		}
 	}
 	
 	public String cerrarSesion(){
+		Log.info("El usuario " + user.getLogin() + " solicita cerrar sesión");
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().
 											getExternalContext().
 											getSession(false);
 		session.invalidate();
+		Log.info("Sesión cerrada correctamente");
 		return "cerrar";
 	}
 	

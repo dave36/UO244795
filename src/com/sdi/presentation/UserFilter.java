@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import alb.util.log.Log;
+
 import com.sdi.dto.User;
 
 /**
@@ -67,8 +69,12 @@ public class UserFilter implements Filter {
 		if(user == null || user.getIsAdmin()){
 			String loginForm = config.getInitParameter("LoginParam");
 			res.sendRedirect(req.getContextPath() + loginForm);
+			Log.warn("Intento de acceso de usuario no privilegiado a vistas de"
+					+ " usuario");
 		}
-		chain.doFilter(request, response);
+		else{
+			chain.doFilter(request, response);
+		}
 	}
 
 	/**

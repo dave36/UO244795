@@ -32,6 +32,7 @@ public class BeanSettings implements Serializable {
 		locale = SPANISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			Log.info("Se ha seleccionado idioma Español");
 		} catch(Exception e) {
 			Log.warn(e.getMessage());
 		}		
@@ -41,6 +42,7 @@ public class BeanSettings implements Serializable {
 		locale = ENGLISH;
 		try {
 			FacesContext.getCurrentInstance().getViewRoot().setLocale(locale);
+			Log.info("Se ha seleccionado idioma Inglés");
 		} catch(Exception e) {
 			Log.warn(e.getMessage());
 		}
@@ -53,12 +55,12 @@ public class BeanSettings implements Serializable {
 	//el MBean ya estaba construido y en @PostConstruct SI.
 	@PostConstruct
 	public void init() {
-		System.out.println("BeanSettings - PostConstruct");
+		Log.info("BeanSettings - PostConstruct");
 	}
 	
 	//Es sólo a modo de traza.
 	@PreDestroy
 	public void end() {
-		System.out.println("BeanSettings - PreDestroy");
+		Log.info("BeanSettings - PreDestroy");
 	}
 }
