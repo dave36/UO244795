@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
+
 <f:view locale="#{settings.locale}">
 	<h:head>
 		<title>#{msgs.tituloHead}</title>
@@ -20,20 +20,22 @@
 			<br />
 			<table border="5" align="center">
 				<tr>
-					<th class="title">
-						<ui:insert name="titulo">#{msgs.tituloLogin}</ui:insert>
+					<th class="title"><ui:insert name="titulo">#{msgs.tituloLogin}</ui:insert>
 					</th>
 				</tr>
 			</table>
-			<br/>
+			<br />
 			<p:menubar>
-				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">
-					<p:menuitem value="#{msgs.enlaceIdiomaES}" actionListener="#{settings.setSpanish}" update="@all" />
-					<p:menuitem value="#{msgs.enlaceIdiomaEN}" actionListener="#{settings.setEnglish}" update="@all" /> 
+				<p:submenu id="idioma" style="float:right"
+					label="#{msgs.textoIdioma}" icon="ui-icon-document">
+					<p:menuitem id="español" value="#{msgs.enlaceIdiomaES}"
+						actionListener="#{settings.setSpanish}" update="@all" />
+					<p:menuitem id="ingles" value="#{msgs.enlaceIdiomaEN}"
+						actionListener="#{settings.setEnglish}" update="@all" />
 				</p:submenu>
 			</p:menubar>
 		</h:form>
-		<br/>
+		<br />
 
 		<ui:insert name="cuerpo">#{msgs.tituloDefectoCuerpo}</ui:insert>
 

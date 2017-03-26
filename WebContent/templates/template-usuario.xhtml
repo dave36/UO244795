@@ -31,9 +31,9 @@
 					<p:menuitem id="misTareas" value="#{msgs.tituloOpcion1User}"
 						action="#{controller.volverAListas()}" />
 				</p:submenu>
-				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}"
-					icon="fa fa-gear">
-					<p:menuitem value="#{msgs.tituloCerrarSesion}"
+				<p:submenu id="configuracion" style="float:right"
+					label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
+					<p:menuitem id="cerrarSesion" value="#{msgs.tituloCerrarSesion}"
 						action="#{controller.cerrarSesion()}" />
 				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}"
@@ -46,19 +46,17 @@
 			</p:menubar>
 		</h:form>
 		<br />
-		
+
 		<p:panel header="#{msgs.headerCategorias}">
-			<p:dataTable var="var"
-					value="#{controller.categorias}" border="1">
-				<p:column headerText="#{msgs.idPrincipal}" 
-							style="text-align:center">
-					<h:outputText value="#{var.id}"/>
+			<p:dataTable var="var" value="#{controller.categorias}" border="1">
+				<p:column headerText="#{msgs.idPrincipal}" style="text-align:center">
+					<h:outputText value="#{var.id}" />
 				</p:column>
-				
-				<p:column headerText="#{msgs.nombrePrincipal}" 
-							style="text-align:center">
-					<h:outputText value="#{var.name}"/>
-				</p:column>		
+
+				<p:column headerText="#{msgs.nombrePrincipal}"
+					style="text-align:center">
+					<h:outputText value="#{var.name}" />
+				</p:column>
 			</p:dataTable>
 		</p:panel>
 		<br />

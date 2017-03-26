@@ -118,7 +118,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>editar</from-outcome>
-			<to-view-id>/editarTarea.xhtml</to-view-id>
+			<to-view-id>/user/editarTarea.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>

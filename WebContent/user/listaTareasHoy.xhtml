@@ -9,67 +9,65 @@
 
 <ui:composition template="/templates/template-usuario.xhtml">
 	<ui:define name="header">
-	   
+
 	</ui:define>
-	
+
 	<ui:define name="cuerpo">
-		
+
 		<style type="text/css">
-	 		.colorRed{
-	 			background: #FF2D00;
-	 			color: #000000;
-	 		}
-	 		
-	 		.colorNormal{
-	 			color: #000000;
-	 		}
-		</style>
-		
-	    <h:form id="form-usuarios">
+.colorRed {
+	background: #FF2D00;
+	color: #000000;
+}
+
+.colorNormal {
+	color: #000000;
+}
+</style>
+
+		<h:form id="form-usuarios">
 			<p:panel header="#{msgs.tituloListaUsuarios}">
 				<p:dataTable id="tablalistado" var="var"
-					value="#{controller.tareas}" border="1"
-					selectionMode="single" selection="#{controller.seleccionada}"
+					value="#{controller.tareas}" border="1" selectionMode="single"
+					selection="#{controller.seleccionada}"
 					rowStyleClass="#{controller.retrasada(var) ? 'colorRed' : 'colorNormal'}
 								   #{controller.finalizada(var) ? 'colorVerde' : 'colorNormal'}"
-					rowKey="#{var.id}" >
+					rowKey="#{var.id}">
 					<p:column id="headerTitulo" headerText="#{msgs.tituloTarea}"
-							 style="text-align:center">
-						<h:outputText id="filaNombre" value="#{var.title}"/>
+						style="text-align:center">
+						<h:outputText id="filaNombre" value="#{var.title}" />
 					</p:column>
 
 					<p:column id="headerComments" headerText="#{msgs.commentTarea}"
-							  style="text-align:center">
+						style="text-align:center">
 						<h:outputText value="#{var.comments}" />
 					</p:column>
-					
+
 					<p:column id="headerCategory" headerText="#{msgs.categoriaTarea}"
-						 sortBy="#{var.categoryId}" style="text-align:center">
-						<h:outputText value="#{var.categoryId}" />
+						sortBy="#{var.categoryId}" style="text-align:center">
+						<h:outputText id="filaCategoria" value="#{var.categoryId}" />
 					</p:column>
 
 					<p:column id="headerFecha" headerText="#{msgs.fechaTarea}"
-						sortBy="#{var.planned}"  style="text-align:center">
+						sortBy="#{var.planned}" style="text-align:center">
 						<h:outputText id="filaStatus" value="#{var.planned}">
-							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET"/>
+							<f:convertDateTime pattern="dd/MM/yyyy" timeZone="CET" />
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
 				<div>
 					<p:commandButton id="eliminar" process="@form"
-						value="#{msgs.botonFinalizarTarea}" 
-						action="#{controller.finalizarTarea()}"
-						update="@form" />
+						value="#{msgs.botonFinalizarTarea}"
+						action="#{controller.finalizarTarea()}" update="@form" />
 					<p:commandButton id="editarTarea" process="@form"
-						value="#{msgs.botonEditarTarea}" 
-						action="#{controller.edicionDeTarea()}"
-						update="@form"/>
+						value="#{msgs.botonEditarTarea}"
+						action="#{controller.edicionDeTarea()}" update="@form" />
 				</div>
 			</p:panel>
 		</h:form>
 	</ui:define>
 	<ui:define name="pie">
-	    
+
 	</ui:define>
 </ui:composition>
 </html>

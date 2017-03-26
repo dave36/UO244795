@@ -34,8 +34,8 @@
 						<p:menuitem id="menuitemRecargarBD" value="#{msgs.tituloOpcion2Admin}"
 							action="#{controller.inicializarBD}" update=":mensajes"/>
 				</p:submenu>
-				<p:submenu style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
-						<p:menuitem value="#{msgs.tituloCerrarSesion}"
+				<p:submenu id="configuracion" style="float:right" label="#{msgs.tituloConfiguracion}" icon="fa fa-gear">
+						<p:menuitem id="cerrarSesion" value="#{msgs.tituloCerrarSesion}"
 							action="#{controller.cerrarSesion()}" />
 				</p:submenu>
 				<p:submenu style="float:right" label="#{msgs.textoIdioma}" icon="ui-icon-document">
